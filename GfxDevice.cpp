@@ -19,21 +19,21 @@ void GfxDevice::setIndices(const std::vector<uint32_t>& indices)
 	mIndices = indices;
 }
 
-void GfxDevice::draw() const
+void GfxDevice::setUVs1(const std::vector<glm::vec2>& uvs1)
 {
-	const char* vertexShaderSource = "#version 330 core\n"
-		"layout (location = 0) in vec3 aPos;\n"
-		"void main()\n"
-		"{\n"
-		"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-		"}\0";
-	const char* fragmentShaderSource = "#version 330 core\n"
-		"out vec4 FragColor;\n"
-		"void main()\n"
-		"{\n"
-		"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-		"}\n\0";
+	mUVs1 = uvs1;
+}
 
+void GfxDevice::setShader(const std::string& vertexSource, const std::string& fragmentSource)
+{
+	if (mShaderProgram)
+	{
+		glDeleteProgram(mShaderProgram);
+		mShaderProgram = 0;
+	}
+
+	const char* vertexShaderSource = vertexSource.c_str();
+	const char* fragmentShaderSource = fragmentSource.c_str();
 	const uint32_t vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, nullptr);
 	glCompileShader(vertexShader);
@@ -42,32 +42,66 @@ void GfxDevice::draw() const
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
 	glCompileShader(fragmentShader);
 
-	const uint32_t shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-	glUseProgram(shaderProgram);
+	mShaderProgram = glCreateProgram();
+	glAttachShader(mShaderProgram, vertexShader);
+	glAttachShader(mShaderProgram, fragmentShader);
+	glLinkProgram(mShaderProgram);
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+}
 
-	uint32_t vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
+void GfxDevice::draw()
+{
+	glGenVertexArrays(1, &mVao);
+	glBindVertexArray(mVao);
 
-	uint32_t vbo;
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glGenBuffers(1, &mVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, mVbo);
 	glBufferData(GL_ARRAY_BUFFER, static_cast<int32_t>(mVertices.size() * sizeof(glm::vec3)), mVertices.data(),
 	             GL_STATIC_DRAW);
 
-	uint32_t ebo;
-	glGenBuffers(1, &ebo);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glGenBuffers(1, &mEbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEbo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<int32_t>(mIndices.size() * sizeof(uint32_t)), mIndices.data(),
 	             GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), nullptr);
 	glEnableVertexAttribArray(0);
 
+	glUseProgram(mShaderProgram);
+
 	glDrawElements(GL_TRIANGLES, static_cast<int32_t>(mIndices.size()), GL_UNSIGNED_INT, nullptr);
+	clean();
+}
+
+void GfxDevice::clean()
+{
+	if (mVao)
+	{
+		glDeleteVertexArrays(1, &mVao);
+		mVao = 0;
+	}
+
+	if (mVbo)
+	{
+		glDeleteBuffers(1, &mVbo);
+		mVbo = 0;
+	}
+
+	if (mEbo)
+	{
+		glDeleteBuffers(1, &mEbo);
+		mEbo = 0;
+	}
+
+	if (mShaderProgram)
+	{
+		glDeleteProgram(mShaderProgram);
+		mShaderProgram = 0;
+	}
+}
+
+GfxDevice::~GfxDevice()
+{
+	clean();
 }
