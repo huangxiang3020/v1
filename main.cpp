@@ -3,6 +3,7 @@
 #include <cstdint>
 #include "GfxDevice.h"
 #include <glm/vec4.hpp>
+#include "Shader.h"
 
 int main(int argc, char* argv[])
 {
@@ -28,8 +29,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
-	auto* device = new GfxDevice();
-
+	auto context = DrawContext();
 	const std::vector<glm::vec3> vertices{
 		glm::vec3(0.5f, 0.5f, 0.0f),
 		glm::vec3(0.5f, -0.5f, 0.0f),
@@ -41,34 +41,33 @@ int main(int argc, char* argv[])
 		0, 1, 3,
 		1, 2, 3
 	};
+	context.setVertices(vertices);
+	context.setIndices(intices);
 
-	device->setVertices(vertices);
-	device->setIndices(intices);
-
-	const char* vertexShaderSource = "#version 330 core\n"
+	const char* vertexCode = "#version 330 core\n"
 		"layout (location = 0) in vec3 aPos;\n"
 		"void main()\n"
 		"{\n"
 		"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
 		"}";
-	const char* fragmentShaderSource = "#version 330 core\n"
+	const char* fragmentCode = "#version 330 core\n"
 		"out vec4 FragColor;\n"
 		"void main()\n"
 		"{\n"
 		"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 		"}\n";
+	const auto shader = Shader(vertexCode, fragmentCode);
 
+	constexpr auto device = GfxDevice();
 	while (!glfwWindowShouldClose(window))
 	{
-		device->clearColor(glm::vec4(1, 1, 1, 1));
-		device->setShader(vertexShaderSource, fragmentShaderSource);
-		device->draw();
+		device.clearColor(glm::vec4(1, 1, 1, 1));
+		shader.use();
+		device.draw(context);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
-
-	delete device;
 
 	glfwTerminate();
 
