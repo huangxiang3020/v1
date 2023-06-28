@@ -17,6 +17,8 @@
       <Filter>opengl</Filter>
     </ClCompile>
     <ClCompile Include="DrawContext.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Material.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GfxDevice.h">
@@ -26,5 +28,7 @@
       <Filter>opengl</Filter>
     </ClInclude>
     <ClInclude Include="DrawContext.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Material.h" />
   </ItemGroup>
 </Project>

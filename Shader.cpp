@@ -45,6 +45,11 @@ void Shader::setFloat(const std::string& name, float value) const
 	glUniform1f(glGetUniformLocation(mId, name.c_str()), value);
 }
 
+void Shader::setVec4(const std::string& name, const glm::vec4& vec4) const
+{
+	glUniform4f(glGetUniformLocation(mId, name.c_str()), vec4.x, vec4.y, vec4.z, vec4.w);
+}
+
 void Shader::checkCompileErrors(uint32_t shader, const std::string& type) const
 {
 	int success;

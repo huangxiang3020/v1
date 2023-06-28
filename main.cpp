@@ -4,6 +4,7 @@
 #include "GfxDevice.h"
 #include <glm/vec4.hpp>
 #include "Shader.h"
+#include "Texture.h"
 
 int main(int argc, char* argv[])
 {
@@ -46,23 +47,32 @@ int main(int argc, char* argv[])
 
 	const char* vertexCode = "#version 330 core\n"
 		"layout (location = 0) in vec3 aPos;\n"
+		"out vec2 uv1;\n"
 		"void main()\n"
 		"{\n"
 		"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+		"	uv1 = vec2(aPos.x, aPos.y);\n"	
 		"}";
 	const char* fragmentCode = "#version 330 core\n"
 		"out vec4 FragColor;\n"
+		"in vec2 uv1;\n"
+		"uniform vec4 _Color;\n"
+		"uniform sampler2D _MainTex;\n"
 		"void main()\n"
 		"{\n"
-		"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+		"   FragColor = texture(_MainTex, uv1);\n"
 		"}\n";
 	const auto shader = Shader(vertexCode, fragmentCode);
+	const auto texture = Texture("C:/Users/hx/Documents/Project/v1/container.jpg");
 
 	constexpr auto device = GfxDevice();
 	while (!glfwWindowShouldClose(window))
 	{
 		device.clearColor(glm::vec4(1, 1, 1, 1));
 		shader.use();
+		shader.setVec4("_Color", glm::vec4(1, 1, 0, 0));
+		shader.setInt("_MainTex", 0);
+		texture.active(0);
 		device.draw(context);
 
 		glfwSwapBuffers(window);
