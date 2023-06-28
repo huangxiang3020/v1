@@ -1,13 +1,13 @@
 #pragma once
 #include <cstdint>
 #include <string>
-#include <glm/vec4.hpp>
 
 class Texture
 {
 public:
 	Texture(const std::string& filePath);
 	void active(uint32_t location) const;
+	~Texture();
 
 private:
 	uint32_t mId = 0;

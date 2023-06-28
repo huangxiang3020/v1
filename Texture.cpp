@@ -29,3 +29,8 @@ void Texture::active(uint32_t location) const
 	glActiveTexture(GL_TEXTURE0 + location);
 	glBindTexture(GL_TEXTURE_2D, mId);
 }
+
+Texture::~Texture()
+{
+	glDeleteTextures(1, &mId);
+}

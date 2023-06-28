@@ -19,6 +19,7 @@
     <ClCompile Include="DrawContext.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Mesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GfxDevice.h">
@@ -30,5 +31,6 @@
     <ClInclude Include="DrawContext.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="Mesh.h" />
   </ItemGroup>
 </Project>

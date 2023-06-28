@@ -1,10 +1,19 @@
 #pragma once
-#include "DrawContext.h"
+#include <glad/gl.h>
+#include <GLFW/glfw3.h>
 #include <glm/vec4.hpp>
+#include "DrawContext.h"
 
 class GfxDevice
 {
 public:
+	int32_t initalize();
 	void clearColor(const glm::vec4& color) const;
-	void draw(DrawContext& context) const;
+	void draw(const DrawContext& context) const;
+	void swap() const;
+	bool shouldQuit() const;
+	void terminate() const;
+
+private:
+	std::shared_ptr<GLFWwindow> mWindow;
 };
