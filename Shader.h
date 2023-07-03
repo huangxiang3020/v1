@@ -6,7 +6,7 @@
 class Shader
 {
 public:
-	Shader(const std::string& vertexCode, const std::string& fragmentCode);
+	Shader(const std::string& vPath, const std::string& fPath);
 	void use() const;
 	void setBool(const std::string& name, bool value) const;
 	void setInt(const std::string& name, int value) const;
@@ -17,4 +17,5 @@ public:
 private:
 	uint32_t mId = 0;
 	void checkCompileErrors(unsigned int shader, const std::string& type) const;
+	void load(const std::string& vertexCode, const std::string& fragmentCode);
 };

@@ -13,9 +13,9 @@ void Mesh::setIndices(const std::vector<uint32_t>& indices)
 	mDirty = true;
 }
 
-void Mesh::setUVs1(const std::vector<glm::vec2>& uvs1)
+void Mesh::setUVs(const std::vector<glm::vec2>& uvs1)
 {
-	mUVs1 = uvs1;
+	mUVs = uvs1;
 	mDirty = true;
 }
 
@@ -25,11 +25,12 @@ void Mesh::use()
 		genvram();
 
 	glBindVertexArray(mVao);
+	glDrawElements(GL_TRIANGLES, static_cast<int32_t>(iCount()), GL_UNSIGNED_INT, nullptr);
 }
 
 uint32_t Mesh::iCount() const
 {
-	return mIndices.size();
+	return static_cast<uint32_t>(mIndices.size());
 }
 
 void Mesh::clean()

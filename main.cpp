@@ -26,13 +26,17 @@ int main(int argc, char* argv[])
 	mesh->setVertices(vertices);
 	mesh->setIndices(intices);
 
-	const auto material = std::make_shared<Material>();
+	const auto shader = std::make_shared<Shader>("res/shader/vertex.vs", "res/shader/frag.fs");
+	const auto texture = std::make_shared<Texture>("res/image/container.jpg");
+
 	auto context = DrawContext();
 	context.setMesh(mesh);
-	context.setMaterial(material);
+	context.setShader(shader);
+	context.setTexture(texture);
 
 	while (!device.shouldQuit())
 	{
+		device.processInput();
 		device.clearColor(glm::vec4(1, 1, 1, 1));
 		device.draw(context);
 		device.swap();

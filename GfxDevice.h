@@ -9,11 +9,12 @@ class GfxDevice
 public:
 	int32_t initalize();
 	void clearColor(const glm::vec4& color) const;
+	void processInput() const;
 	void draw(const DrawContext& context) const;
 	void swap() const;
 	bool shouldQuit() const;
 	void terminate() const;
 
 private:
-	std::shared_ptr<GLFWwindow> mWindow;
+	GLFWwindow* mWindow;
 };

@@ -1,23 +1,25 @@
 #include "DrawContext.h"
 
-#include <glad/gl.h>
-
 void DrawContext::setMesh(const std::shared_ptr<Mesh>& mesh)
 {
 	mMesh = mesh;
 }
 
-void DrawContext::setMaterial(const std::shared_ptr<Material>& material)
+void DrawContext::setShader(const std::shared_ptr<Shader>& shader)
 {
-	mMaterial = material;
+	mShader = shader;
+}
+
+void DrawContext::setTexture(const std::shared_ptr<Texture>& texture)
+{
+	mTexture = texture;
 }
 
 void DrawContext::draw() const
 {
+	mShader->use();
+	mShader->setVec4("_Color", glm::vec4(1, 1, 0, 0));
+	mShader->setInt("_MainTex", 0);
+	mTexture->active(0);
 	mMesh->use();
-	mMaterial->use();
-	glDrawElements(GL_TRIANGLES, static_cast<int32_t>(mMesh->iCount()), GL_UNSIGNED_INT, nullptr);
 }
-
-
-

@@ -9,14 +9,14 @@ int32_t GfxDevice::initalize()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	mWindow = std::shared_ptr<GLFWwindow>(glfwCreateWindow(640, 480, "v1", nullptr, nullptr));
+	mWindow = glfwCreateWindow(640, 480, "v1", nullptr, nullptr);
 	if (!mWindow)
 	{
 		glfwTerminate();
 		return -1;
 	}
 
-	glfwMakeContextCurrent(mWindow.get());
+	glfwMakeContextCurrent(mWindow);
 
 	const int32_t version = gladLoadGL(glfwGetProcAddress);
 	if (version == 0)
@@ -33,6 +33,12 @@ void GfxDevice::clearColor(const glm::vec4& color) const
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void GfxDevice::processInput() const
+{
+	if (glfwGetKey(mWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(mWindow, true);
+}
+
 void GfxDevice::draw(const DrawContext& context) const
 {
 	context.draw();
@@ -40,13 +46,13 @@ void GfxDevice::draw(const DrawContext& context) const
 
 void GfxDevice::swap() const
 {
-	glfwSwapBuffers(mWindow.get());
+	glfwSwapBuffers(mWindow);
 	glfwPollEvents();
 }
 
 bool GfxDevice::shouldQuit() const
 {
-	return glfwWindowShouldClose(mWindow.get());
+	return glfwWindowShouldClose(mWindow);
 }
 
 void GfxDevice::terminate() const
