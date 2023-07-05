@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <glm/gtc/type_ptr.hpp>
 
 Shader::Shader(const std::string& vPath, const std::string& fPath)
 {
@@ -46,6 +47,11 @@ void Shader::setFloat(const std::string& name, float value) const
 void Shader::setVec4(const std::string& name, const glm::vec4& vec4) const
 {
 	glUniform4f(glGetUniformLocation(mId, name.c_str()), vec4.x, vec4.y, vec4.z, vec4.w);
+}
+
+void Shader::setMat4(const std::string& name, const glm::mat4& mat4) const
+{
+	glUniformMatrix4fv(glGetUniformLocation(mId, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat4));
 }
 
 Shader::~Shader()

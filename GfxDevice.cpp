@@ -39,9 +39,9 @@ void GfxDevice::processInput() const
 		glfwSetWindowShouldClose(mWindow, true);
 }
 
-void GfxDevice::draw(const DrawContext& context) const
+void GfxDevice::draw(const Camera& camera, const DrawContext& context) const
 {
-	context.draw();
+	context.draw(camera);
 }
 
 void GfxDevice::swap() const

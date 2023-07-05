@@ -16,10 +16,16 @@
     <ClCompile Include="Shader.cpp">
       <Filter>opengl</Filter>
     </ClCompile>
-    <ClCompile Include="DrawContext.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Material.cpp" />
-    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Mesh.cpp">
+      <Filter>opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="DrawContext.cpp">
+      <Filter>opengl</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GfxDevice.h">
@@ -28,9 +34,15 @@
     <ClInclude Include="Shader.h">
       <Filter>opengl</Filter>
     </ClInclude>
-    <ClInclude Include="DrawContext.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Texture.h">
+      <Filter>opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawContext.h">
+      <Filter>opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h" />
   </ItemGroup>
 </Project>

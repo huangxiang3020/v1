@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <string>
 #include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
 
 class Shader
 {
@@ -12,6 +13,7 @@ public:
 	void setInt(const std::string& name, int value) const;
 	void setFloat(const std::string& name, float value) const;
 	void setVec4(const std::string& name, const glm::vec4& vec4) const;
+	void setMat4(const std::string& name, const glm::mat4& mat4) const;
 	~Shader();
 
 private:

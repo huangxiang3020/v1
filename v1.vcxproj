@@ -132,6 +132,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DrawContext.cpp" />
     <ClCompile Include="external\src\gl.c" />
     <ClCompile Include="main.cpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="DrawContext.h" />
     <ClInclude Include="GfxDevice.h" />
     <ClInclude Include="Mesh.h" />
