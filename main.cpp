@@ -14,8 +14,8 @@ int main(int argc, char* argv[])
 
 	// Camera
 	auto camera = Camera();
-	camera.setLocalPosition(glm::vec3(0, 0, -10));
-	camera.setLocalEulerAngles(glm::vec3(-30, 0, 0));
+	camera.setLocalPosition(glm::vec3(-2, 2, -10));
+	camera.setLocalEulerAngles(glm::vec3(-10, 0, 0));
 	camera.setAspect(640.f / 480);
 	camera.setFar(1000);
 	camera.setNear(1);

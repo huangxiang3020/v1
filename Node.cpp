@@ -45,6 +45,7 @@ glm::mat4 Node::getLocalToWorldMatrix()
 	if (mDirty)
 	{
 		updateTransform();
+		mDirty = false;
 	}
 	return mLocalToWorldMatrix;
 }
@@ -54,6 +55,7 @@ glm::vec3 Node::getPosition()
 	if (mDirty)
 	{
 		updateTransform();
+		mDirty = false;
 	}
 	return mPosition;
 }
@@ -75,7 +77,6 @@ void Node::updateTransform()
 	}
 
 	mPosition = mLocalToWorldMatrix * glm::vec4(0, 0, 0, 1);
-	mDirty = false;
 
 	for (const auto& child : mChildren)
 	{

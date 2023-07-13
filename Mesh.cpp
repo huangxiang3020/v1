@@ -22,8 +22,10 @@ void Mesh::setUVs(const std::vector<glm::vec2>& uvs1)
 void Mesh::use()
 {
 	if (mDirty)
+	{
 		genvram();
-
+		mDirty = true;
+	}
 	glBindVertexArray(mVao);
 	glDrawElements(GL_TRIANGLES, static_cast<int32_t>(iCount()), GL_UNSIGNED_INT, nullptr);
 }
@@ -56,23 +58,27 @@ void Mesh::clean()
 
 void Mesh::genvram()
 {
-	mDirty = false;
 	clean();
 	glGenVertexArrays(1, &mVao);
 	glBindVertexArray(mVao);
 
+	const auto sizeVertices = static_cast<int32_t>(mVertices.size() * sizeof(glm::vec3));
+	const auto sizeUVs = static_cast<int32_t>(mUVs.size() * sizeof(glm::vec2));
 	glGenBuffers(1, &mVbo);
 	glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-	glBufferData(GL_ARRAY_BUFFER, static_cast<int32_t>(mVertices.size() * sizeof(glm::vec3)), mVertices.data(),
-		GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeVertices + sizeUVs, nullptr,GL_STATIC_DRAW);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeVertices, mVertices.data());
+	glBufferSubData(GL_ARRAY_BUFFER, sizeVertices, sizeUVs, mUVs.data());
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), nullptr);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), reinterpret_cast<void*>(sizeVertices));
+	glEnableVertexAttribArray(1);
 
 	glGenBuffers(1, &mEbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEbo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<int32_t>(mIndices.size() * sizeof(uint32_t)), mIndices.data(),
-		GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), nullptr);
-	glEnableVertexAttribArray(0);
+	             GL_STATIC_DRAW);
 
 	glBindVertexArray(0);
 }
