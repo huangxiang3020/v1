@@ -22,10 +22,9 @@
     <ClCompile Include="Texture.cpp">
       <Filter>opengl</Filter>
     </ClCompile>
-    <ClCompile Include="DrawContext.cpp">
-      <Filter>opengl</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Cube.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GfxDevice.h">
@@ -40,9 +39,8 @@
     <ClInclude Include="Mesh.h">
       <Filter>opengl</Filter>
     </ClInclude>
-    <ClInclude Include="DrawContext.h">
-      <Filter>opengl</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Cube.h" />
   </ItemGroup>
 </Project>

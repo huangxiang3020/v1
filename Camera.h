@@ -1,17 +1,21 @@
 #pragma once
-#include <glm/vec3.hpp>
+#include "Node.h"
 
-class Camera
+class Camera : public Node
 {
 public:
-	Camera() = default;
+	void setNear(float near);
+	float getNear() const;
+	void setFar(float far);
+	float getFar() const;
+	void setFov(float fov);
+	float getFov() const;
+	void setAspect(float aspect);
+	float getAspect() const;
 
-	glm::vec3 position;
-	glm::vec3 forward;
-	glm::vec3 up;
-
-	float near;
-	float far;
-	float fov;
-	float aspect;
+protected:
+	float mNear = 0;
+	float mFar = 0;
+	float mFov = 0;
+	float mAspect = 0;
 };
