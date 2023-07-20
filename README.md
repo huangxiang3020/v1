@@ -3,7 +3,7 @@
 - [x] Left-Handed Coordinate 
 ![Coordinate](/img/coordinate.png)
 
-- [x] Matrix
+- [x] $p = proj * view * model * \bar{p} $
 $$\left[ \begin{matrix}
    x \\
    y \\
@@ -26,3 +26,58 @@ $$\left[ \begin{matrix}
   \end{matrix}
   \right]$$
 
+- [ ] Desgin (provisional)
+```mermaid
+graph TB
+    subgraph Graphics
+    Device
+    Mesh
+    Shader
+    Texture
+    end
+    
+    subgraph Node
+      Position
+      Rotation
+      Scale
+      Parent
+      Children
+      subgraph Component
+        awake
+        onEnable
+        start
+        update
+        lateUpdate
+        onDisable
+        onDestroy
+      end
+    end
+
+    subgraph Scene
+      startPhase
+      updatePhase
+      lateUpdatePhase
+    end
+    subgraph Systems
+      TimeSystem
+      InputSystem
+      System3
+      System4
+    end
+
+    Scene-->Node
+    Scene.->Systems
+
+    Camera
+    Render
+    Material
+    Material.->Shader
+    Material.->Texture
+    Render.->Material
+    Render.->Mesh
+    Component---Camera
+    Component---Render
+    Device-->Mesh
+    Device-->Shader
+    Device-->Texture
+```
