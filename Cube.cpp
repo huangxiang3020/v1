@@ -60,15 +60,16 @@ Cube::Cube()
 	mTexture = texture;
 }
 
-void Cube::draw(Camera& camera)
+void Cube::draw(const std::shared_ptr<Camera>& camera)
 {
 	const auto modelLocalToWorld = getLocalToWorldMatrix();
-	const auto cameraLocalToWorld = camera.getLocalToWorldMatrix();
+	const auto cameraNode = camera->getNode();
+	const auto cameraLocalToWorld = cameraNode->getLocalToWorldMatrix();
 
 	const glm::vec3 cameraForward = glm::normalize(glm::vec3(cameraLocalToWorld[2]));
-	const glm::vec3 cameraTarget = camera.getPosition() + cameraForward;
-	const auto view = glm::lookAt(camera.getPosition(), cameraTarget, glm::normalize(glm::vec3(cameraLocalToWorld[1])));
-	const auto proj = glm::perspective(camera.getFov(), camera.getAspect(), camera.getNear(), camera.getFar());
+	const glm::vec3 cameraTarget = cameraNode->getPosition() + cameraForward;
+	const auto view = glm::lookAt(cameraNode->getPosition(), cameraTarget, glm::normalize(glm::vec3(cameraLocalToWorld[1])));
+	const auto proj = glm::perspective(camera->getFov(), camera->getAspect(), camera->getNear(), camera->getFar());
 	const auto projView = proj * view;
 
 	mShader->use();

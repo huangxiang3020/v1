@@ -1,5 +1,9 @@
 #include "Camera.h"
 
+Camera::Camera(Node* node):Component(node)
+{
+}
+
 void Camera::setNear(float near)
 {
 	mNear = near;

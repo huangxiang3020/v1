@@ -1,9 +1,11 @@
 #pragma once
 #include "Node.h"
 
-class Camera : public Node
+class Camera : public Component
 {
 public:
+	Camera(Node* node);
+
 	void setNear(float near);
 	float getNear() const;
 	void setFar(float far);

@@ -60,6 +60,20 @@ glm::vec3 Node::getPosition()
 	return mPosition;
 }
 
+void Node::update() const
+{
+	for (const auto& component : mComponents)
+	{
+		component->update();
+	}
+
+	for (const auto& child : mComponents)
+	{
+		child->update();
+	}
+}
+
+
 void Node::updateTransform()
 {
 	const auto translation = glm::translate(glm::mat4(1.0f), mLocalPosition);

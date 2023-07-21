@@ -12,7 +12,7 @@ class Cube : public Node
 public:
 	Cube();
 	~Cube() override = default;
-	void draw(Camera& camera) ;
+	void draw(const std::shared_ptr<Camera>& camera) ;
 
 private:
 	std::shared_ptr<Mesh> mMesh;

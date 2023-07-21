@@ -72,7 +72,7 @@ void Mesh::genvram()
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), nullptr);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), reinterpret_cast<void*>(sizeVertices));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), reinterpret_cast<const void*>(static_cast<int64_t>(sizeVertices)));
 	glEnableVertexAttribArray(1);
 
 	glGenBuffers(1, &mEbo);

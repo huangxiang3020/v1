@@ -3,6 +3,9 @@
 #include <glm/gtc/quaternion.hpp>
 #include <vector>
 #include <memory>
+#include "Component.h"
+
+class Component;
 
 class Node
 {
@@ -20,6 +23,11 @@ public:
 	glm::mat4 getLocalToWorldMatrix();
 	glm::vec3 getPosition();
 
+	template <typename T>
+	std::shared_ptr<T> addComponent();
+
+	void update() const;
+
 protected:
 	glm::vec3 mLocalPosition{0, 0, 0};
 	glm::quat mLocalRotation = {1, 0, 0, 0};
@@ -28,8 +36,17 @@ protected:
 	glm::vec3 mPosition = {0, 0, 0};
 	std::vector<std::shared_ptr<Node>> mChildren = {};
 	std::shared_ptr<Node> mParent = nullptr;
+	std::vector<std::shared_ptr<Component>> mComponents = {};
 
 private:
 	bool mDirty = true;
 	void updateTransform();
 };
+
+template <typename T>
+std::shared_ptr<T> Node::addComponent()
+{
+	auto component = std::make_shared<T>(this);
+	mComponents.push_back(component);
+	return component;
+}

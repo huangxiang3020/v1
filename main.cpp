@@ -2,36 +2,46 @@
 #include "GfxDevice.h"
 #include "Camera.h"
 #include "Cube.h"
+#include "Scene.h"
 
 int main(int argc, char* argv[])
 {
-	auto device = GfxDevice();
-	const auto ret = device.initalize();
+	const auto device = std::make_shared<GfxDevice>();
+	const auto ret = device->initalize();
 	if (ret != 0)
 	{
 		return ret;
 	}
 
 	// Camera
-	auto camera = Camera();
-	camera.setLocalPosition(glm::vec3(-2, 2, -10));
-	camera.setLocalEulerAngles(glm::vec3(-10, 0, 0));
-	camera.setAspect(640.f / 480);
-	camera.setFar(1000);
-	camera.setNear(1);
-	camera.setFov(45);
+	const auto cameraNode = std::make_shared<Node>();
+	cameraNode->setLocalPosition(glm::vec3(-2, 2, -10));
+	cameraNode->setLocalEulerAngles(glm::vec3(-10, 0, 0));
+
+	const auto camera = cameraNode->addComponent<Camera>();
+	camera->setAspect(640.f / 480);
+	camera->setFar(1000);
+	camera->setNear(1);
+	camera->setFov(45);
 
 	auto cube = Cube();
 
-	while (!device.shouldQuit())
+	const auto scene = std::make_shared<Scene>();
+	scene->getNode()->addChild(cameraNode);
+
+	while (!device->shouldQuit())
 	{
-		device.processInput();
-		device.clearColor(glm::vec4(1, 1, 1, 1));
+		device->processInput();
+		scene->update();
+
+		// startDraw
+		device->clearColor(glm::vec4(1, 1, 1, 1));
 		cube.draw(camera);
-		device.swap();
+		device->swap();
+		// endDraw
 	}
 
-	device.terminate();
+	device->terminate();
 
 	return 0;
 }
