@@ -24,9 +24,11 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Node.cpp" />
-    <ClCompile Include="Cube.cpp" />
-    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="Render.cpp" />
+    <ClCompile Include="RenderManager.cpp" />
+    <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GfxDevice.h">
@@ -43,8 +45,10 @@
     </ClInclude>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="Cube.h" />
-    <ClInclude Include="Scene.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="Render.h" />
+    <ClInclude Include="RenderManager.h" />
+    <ClInclude Include="Scene.h" />
   </ItemGroup>
 </Project>

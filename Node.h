@@ -7,7 +7,7 @@
 
 class Component;
 
-class Node
+class Node : public std::enable_shared_from_this<Node>
 {
 public:
 	Node() = default;
@@ -46,7 +46,8 @@ private:
 template <typename T>
 std::shared_ptr<T> Node::addComponent()
 {
-	auto component = std::make_shared<T>(this);
+	auto component = std::make_shared<T>(shared_from_this());
 	mComponents.push_back(component);
+	component->awake();
 	return component;
 }

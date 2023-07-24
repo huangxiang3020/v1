@@ -1,11 +1,9 @@
-#include <glm/glm.hpp>
-#include <glm/ext/matrix_transform.hpp>
-#include <glm/ext/matrix_clip_space.hpp>
-#include "Cube.h"
+#include "Render.h"
 
-#include "Camera.h"
+#include "CameraManager.h"
+#include "RenderManager.h"
 
-Cube::Cube()
+Render::Render(const std::shared_ptr<Node>& node) : Component(node)
 {
 	// Mesh
 	const auto mesh = std::make_shared<Mesh>();
@@ -60,15 +58,16 @@ Cube::Cube()
 	mTexture = texture;
 }
 
-void Cube::draw(const std::shared_ptr<Camera>& camera)
+void Render::draw(const std::shared_ptr<Camera>& camera) const
 {
-	const auto modelLocalToWorld = getLocalToWorldMatrix();
+	const auto modelLocalToWorld = getNode()->getLocalToWorldMatrix();
 	const auto cameraNode = camera->getNode();
 	const auto cameraLocalToWorld = cameraNode->getLocalToWorldMatrix();
 
 	const glm::vec3 cameraForward = glm::normalize(glm::vec3(cameraLocalToWorld[2]));
 	const glm::vec3 cameraTarget = cameraNode->getPosition() + cameraForward;
-	const auto view = glm::lookAt(cameraNode->getPosition(), cameraTarget, glm::normalize(glm::vec3(cameraLocalToWorld[1])));
+	const auto view = glm::lookAt(cameraNode->getPosition(), cameraTarget,
+	                              glm::normalize(glm::vec3(cameraLocalToWorld[1])));
 	const auto proj = glm::perspective(camera->getFov(), camera->getAspect(), camera->getNear(), camera->getFar());
 	const auto projView = proj * view;
 
@@ -79,4 +78,16 @@ void Cube::draw(const std::shared_ptr<Camera>& camera)
 	mShader->setInt("_MainTex", 0);
 	mTexture->active(0);
 	mMesh->use();
+}
+
+void Render::awake()
+{
+	const auto render = shared_from_this();
+	RenderManager::instance().add(render);
+}
+
+void Render::onDestroy()
+{
+	const auto render = shared_from_this();
+	RenderManager::instance().remove(render);
 }

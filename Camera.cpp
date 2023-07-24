@@ -1,6 +1,7 @@
 #include "Camera.h"
+#include "CameraManager.h"
 
-Camera::Camera(Node* node):Component(node)
+Camera::Camera(const std::shared_ptr<Node>& node): Component(node)
 {
 }
 
@@ -44,3 +45,14 @@ float Camera::getAspect() const
 	return mAspect;
 }
 
+void Camera::awake()
+{
+	const auto camera = shared_from_this();
+	CameraManager::instance().add(camera);
+}
+
+void Camera::onDestroy()
+{
+	const auto camera = shared_from_this();
+	CameraManager::instance().remove(camera);
+}

@@ -1,10 +1,10 @@
 #pragma once
 #include "Node.h"
 
-class Camera : public Component
+class Camera : public Component, public std::enable_shared_from_this<Camera>
 {
 public:
-	Camera(Node* node);
+	Camera(const std::shared_ptr<Node>& node);
 
 	void setNear(float near);
 	float getNear() const;
@@ -14,6 +14,9 @@ public:
 	float getFov() const;
 	void setAspect(float aspect);
 	float getAspect() const;
+
+	void awake() override;
+	void onDestroy() override;
 
 protected:
 	float mNear = 0;

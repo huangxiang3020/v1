@@ -7,7 +7,7 @@ class Component
 {
 public:
 	virtual ~Component() = default;
-	Component(Node* node);
+	Component(const std::shared_ptr<Node>& node);
 	virtual void awake();
 	virtual void onEnable();
 	virtual void start();
@@ -18,9 +18,9 @@ public:
 
 	void setEnabled(bool value);
 	bool getEnabled() const;
-	Node* getNode() const;
+	std::shared_ptr<Node> getNode() const;
 
 private:
-	Node* mNode;
+	std::shared_ptr<Node> mNode;
 	bool mEnabled = false;
 };
