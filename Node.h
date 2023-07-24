@@ -9,6 +9,7 @@ class Component;
 
 class Node : public std::enable_shared_from_this<Node>
 {
+	friend class Component;
 public:
 	Node() = default;
 	virtual ~Node() = default;
@@ -27,6 +28,7 @@ public:
 	std::shared_ptr<T> addComponent();
 
 	void update() const;
+	void destroy();
 
 protected:
 	glm::vec3 mLocalPosition{0, 0, 0};
@@ -41,6 +43,7 @@ protected:
 private:
 	bool mDirty = true;
 	void updateTransform();
+	void innerDestroy() const;
 };
 
 template <typename T>

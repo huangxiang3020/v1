@@ -44,11 +44,7 @@ graph TB
       Children
       subgraph Component
         awake
-        onEnable
-        start
         update
-        lateUpdate
-        onDisable
         onDestroy
       end
     end
@@ -71,9 +67,8 @@ graph TB
     Camera
     Render
     Material
-    Material.->Shader
-    Material.->Texture
-    Render.->Material
+    Render.->Shader
+    Render.->Texture
     Render.->Mesh
     Component---Camera
     Component---Render

@@ -5,7 +5,7 @@ class Scene
 {
 public:
 	Scene();
-	~Scene() = default;
+	~Scene();
 	void update() const;
 	std::shared_ptr<Node> getNode();
 

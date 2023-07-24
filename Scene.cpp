@@ -5,6 +5,11 @@ Scene::Scene()
 	mRoot = std::make_shared<Node>();
 }
 
+Scene::~Scene()
+{
+	mRoot->destroy();
+}
+
 void Scene::update() const
 {
 	mRoot->update();

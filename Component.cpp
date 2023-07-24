@@ -10,23 +10,7 @@ void Component::awake()
 {
 }
 
-void Component::onEnable()
-{
-}
-
-void Component::start()
-{
-}
-
 void Component::update()
-{
-}
-
-void Component::lateUpdater()
-{
-}
-
-void Component::onDisable()
 {
 }
 
@@ -34,17 +18,26 @@ void Component::onDestroy()
 {
 }
 
-void Component::setEnabled(bool value)
-{
-	mEnabled = value;
-}
-
-bool Component::getEnabled() const
-{
-	return mEnabled;
-}
-
 std::shared_ptr<Node> Component::getNode() const
 {
 	return mNode;
+}
+
+void Component::destroy()
+{
+	innerDestroy();
+	const auto node = getNode();
+	for (auto it = node->mComponents.begin(); it != node->mComponents.end(); ++it)
+	{
+		if ((*it).get() == this)
+		{
+			it = node->mComponents.erase(it);
+			if (it == node->mComponents.end()) break;
+		}
+	}
+}
+
+void Component::innerDestroy()
+{
+	onDestroy();
 }

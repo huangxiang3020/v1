@@ -5,22 +5,20 @@ class Node;
 
 class Component
 {
+	friend class Node;
+
 public:
 	virtual ~Component() = default;
 	Component(const std::shared_ptr<Node>& node);
+	std::shared_ptr<Node> getNode() const;
+	void destroy();
+
+protected:
 	virtual void awake();
-	virtual void onEnable();
-	virtual void start();
 	virtual void update();
-	virtual void lateUpdater();
-	virtual void onDisable();
 	virtual void onDestroy();
 
-	void setEnabled(bool value);
-	bool getEnabled() const;
-	std::shared_ptr<Node> getNode() const;
-
 private:
+	void innerDestroy();
 	std::shared_ptr<Node> mNode;
-	bool mEnabled = false;
 };

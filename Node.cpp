@@ -67,9 +67,26 @@ void Node::update() const
 		component->update();
 	}
 
-	for (const auto& child : mComponents)
+	for (const auto& child : mChildren)
 	{
 		child->update();
+	}
+}
+
+void Node::destroy()
+{
+	innerDestroy();
+
+	if (mParent != nullptr)
+	{
+		for (auto it = mParent->mChildren.begin(); it != mParent->mChildren.end(); ++it)
+		{
+			if (*it == shared_from_this())
+			{
+				it = mParent->mChildren.erase(it);
+				if (it == mParent->mChildren.end()) break;
+			}
+		}
 	}
 }
 
@@ -95,5 +112,18 @@ void Node::updateTransform()
 	for (const auto& child : mChildren)
 	{
 		child->updateTransform();
+	}
+}
+
+void Node::innerDestroy() const
+{
+	for (const auto& child : mChildren)
+	{
+		child->innerDestroy();
+	}
+
+	for (const auto& component : mComponents)
+	{
+		component->innerDestroy();
 	}
 }
