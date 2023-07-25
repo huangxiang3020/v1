@@ -50,23 +50,20 @@ graph TB
     end
 
     subgraph Scene
-      startPhase
       updatePhase
-      lateUpdatePhase
     end
-    subgraph Systems
-      TimeSystem
-      InputSystem
-      System3
-      System4
+    subgraph Managers
+      TimeManager
+      InputManager
+      CameraManager
+      RenderManager
     end
 
     Scene-->Node
-    Scene.->Systems
+    Scene.->Managers
 
     Camera
     Render
-    Material
     Render.->Shader
     Render.->Texture
     Render.->Mesh

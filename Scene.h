@@ -6,7 +6,7 @@ class Scene
 public:
 	Scene();
 	~Scene();
-	void update() const;
+	void updatePhase() const;
 	std::shared_ptr<Node> getNode();
 
 private:

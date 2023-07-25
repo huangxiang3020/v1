@@ -10,7 +10,7 @@ Scene::~Scene()
 	mRoot->destroy();
 }
 
-void Scene::update() const
+void Scene::updatePhase() const
 {
 	mRoot->update();
 }

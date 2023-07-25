@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 	while (!device->shouldQuit())
 	{
 		device->processInput();
-		scene->update();
+		scene->updatePhase();
 
 		// startDraw
 		device->clearColor(glm::vec4(1, 1, 1, 1));
