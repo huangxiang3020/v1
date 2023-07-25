@@ -4,7 +4,9 @@
 #include "Render.h"
 #include "Scene.h"
 #include "CameraManager.h"
+#include "Prefab.h"
 #include "RenderManager.h"
+#include "ResourceManager.h"
 
 int main(int argc, char* argv[])
 {
@@ -26,9 +28,9 @@ int main(int argc, char* argv[])
 	camera->setFov(45);
 
 	// cube
-	const auto cubeNode = std::make_shared<Node>();
+	const auto cubePrefab = ResourceManager::instance().load<Prefab>("111");
+	const auto cubeNode = cubePrefab->getNode();
 	cubeNode->setLocalPosition(glm::vec3(0, 5, 0));
-	cubeNode->addComponent<Render>();
 
 	// scene
 	const auto scene = std::make_shared<Scene>();

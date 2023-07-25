@@ -12,6 +12,9 @@ public:
 	void draw(const std::shared_ptr<Camera>& camera) const;
 	void awake() override;
 	void onDestroy() override;
+	void setMesh(const std::shared_ptr<Mesh>& mesh);
+	void setShader(const std::shared_ptr<Shader>& shader);
+	void setTexture(const std::shared_ptr<Texture>& texture);
 
 protected:
 	std::shared_ptr<Mesh> mMesh;

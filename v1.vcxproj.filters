@@ -29,6 +29,8 @@
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Prefab.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GfxDevice.h">
@@ -50,5 +52,7 @@
     <ClInclude Include="Render.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Prefab.h" />
   </ItemGroup>
 </Project>

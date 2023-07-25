@@ -4,7 +4,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
-Texture::Texture(const std::string& filePath)
+void Texture::load(const std::string& filePath)
 {
 	void* data = stbi_load(filePath.c_str(), &mWidth, &mHeight, &mChannels, 0);
 	if (data)

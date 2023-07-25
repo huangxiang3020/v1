@@ -5,23 +5,25 @@
 #include <sstream>
 #include <glm/gtc/type_ptr.hpp>
 
-Shader::Shader(const std::string& vPath, const std::string& fPath)
+void Shader::load(const std::string& vPath, const std::string& fPath)
 {
 	std::ifstream vfile(vPath);
 	std::ifstream ffile(fPath);
 	std::stringstream vShaderStream, fShaderStream;
-	if (vfile.is_open() && ffile.is_open()) {  
+	if (vfile.is_open() && ffile.is_open())
+	{
 		vShaderStream << vfile.rdbuf();
 		fShaderStream << ffile.rdbuf();
 		// close file handlers
 		vfile.close();
 		ffile.close();
 	}
-	else {
+	else
+	{
 		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ:" << vPath << " " << fPath << std::endl;
 	}
 
-	load(vShaderStream.str(), fShaderStream.str());
+	loadCode(vShaderStream.str(), fShaderStream.str());
 }
 
 void Shader::use() const
@@ -85,7 +87,7 @@ void Shader::checkCompileErrors(uint32_t shader, const std::string& type) const
 	}
 }
 
-void Shader::load(const std::string& vertexCode, const std::string& fragmentCode)
+void Shader::loadCode(const std::string& vertexCode, const std::string& fragmentCode)
 {
 	const char* vShaderCode = vertexCode.c_str();
 	const char* fShaderCode = fragmentCode.c_str();

@@ -2,17 +2,39 @@
 
 void Node::setParent(const std::shared_ptr<Node>& parent)
 {
-	mParent = parent;
+	if (parent == mParent)
+	{
+		return;
+	}
+	mParent->removeChild(shared_from_this());
+	parent->addChild(shared_from_this());
 }
 
 void Node::addChild(const std::shared_ptr<Node>& child)
 {
 	mChildren.push_back(child);
+	child->mParent = shared_from_this();
+	child->mDirty = true;
+}
+
+void Node::removeChild(const std::shared_ptr<Node>& child)
+{
+	for (auto it = mChildren.begin(); it != mChildren.end(); ++it)
+	{
+		if (*it == child)
+		{
+			it = mChildren.erase(it);
+			if (it == mChildren.end()) break;
+		}
+	}
+	child->mParent = nullptr;
+	child->mDirty = true;
 }
 
 void Node::setLocalPosition(const glm::vec3& position)
 {
 	mLocalPosition = position;
+	mDirty = true;
 }
 
 glm::vec3 Node::getLocalPosition() const
@@ -23,6 +45,7 @@ glm::vec3 Node::getLocalPosition() const
 void Node::setLocalScale(const glm::vec3& scale)
 {
 	mLocalScale = scale;
+	mDirty = true;
 }
 
 glm::vec3 Node::getLocalScale() const
@@ -33,6 +56,7 @@ glm::vec3 Node::getLocalScale() const
 void Node::setLocalEulerAngles(const glm::vec3& eulerAngles)
 {
 	mLocalRotation = glm::quat(glm::radians(eulerAngles));
+	mDirty = true;
 }
 
 glm::vec3 Node::getLocalEulerAngles() const
@@ -45,7 +69,6 @@ glm::mat4 Node::getLocalToWorldMatrix()
 	if (mDirty)
 	{
 		updateTransform();
-		mDirty = false;
 	}
 	return mLocalToWorldMatrix;
 }
@@ -55,7 +78,6 @@ glm::vec3 Node::getPosition()
 	if (mDirty)
 	{
 		updateTransform();
-		mDirty = false;
 	}
 	return mPosition;
 }
@@ -93,6 +115,12 @@ void Node::destroy()
 
 void Node::updateTransform()
 {
+	if (mParent != nullptr && mParent->mDirty)
+	{
+		mParent->updateTransform();
+		return;
+	}
+
 	const auto translation = glm::translate(glm::mat4(1.0f), mLocalPosition);
 	const auto rotation = glm::mat4_cast(mLocalRotation);
 	const auto scale = glm::scale(glm::mat4(1.0f), mLocalScale);
@@ -108,6 +136,7 @@ void Node::updateTransform()
 	}
 
 	mPosition = mLocalToWorldMatrix * glm::vec4(0, 0, 0, 1);
+	mDirty = false;
 
 	for (const auto& child : mChildren)
 	{

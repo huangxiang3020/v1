@@ -15,6 +15,7 @@ public:
 	virtual ~Node() = default;
 	void setParent(const std::shared_ptr<Node>& parent);
 	void addChild(const std::shared_ptr<Node>& child);
+	void removeChild(const std::shared_ptr<Node>& child);
 	void setLocalPosition(const glm::vec3& position);
 	glm::vec3 getLocalPosition() const;
 	void setLocalScale(const glm::vec3& scale);

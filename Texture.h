@@ -5,7 +5,8 @@
 class Texture
 {
 public:
-	Texture(const std::string& filePath);
+	Texture() = default;
+	auto load(const std::string& filePath) -> void;
 	void active(uint32_t location) const;
 	~Texture();
 
