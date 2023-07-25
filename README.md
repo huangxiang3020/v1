@@ -57,10 +57,13 @@ graph TB
       InputManager
       CameraManager
       RenderManager
+      ResourceManager
     end
 
     Scene-->Node
     Scene.->Managers
+
+    Prefab
 
     Camera
     Render
