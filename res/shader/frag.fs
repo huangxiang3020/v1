@@ -1,9 +1,26 @@
 #version 330 core
-out vec4 FragColor;
-in vec2 vsOutUV;
-uniform vec4 _Color;
+
 uniform sampler2D _MainTex;
-void main()
+uniform vec3 _LightDirection;
+uniform vec4 _LightColor;
+uniform vec4 _AmbientColor;
+
+in VsOut
 {
-	FragColor = texture(_MainTex, vsOutUV);
-};
+	vec3 position;
+	vec3 normal;
+    vec2 uv;
+} vsIn;
+
+out vec4 FragColor;
+
+void main()
+{	
+	vec3 lightDir = normalize(-_LightDirection);
+	vec3 normal = normalize(vsIn.normal);
+	float diffuse = max(dot(normal, lightDir), 0.0);
+	
+	vec4 diffuseColor = texture(_MainTex, vsIn.uv);
+	
+    FragColor = _LightColor * (diffuseColor * _AmbientColor + diffuseColor * diffuse);
+}

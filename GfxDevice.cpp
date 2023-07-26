@@ -8,7 +8,6 @@ int32_t GfxDevice::initalize()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_SAMPLES, 4);
 
 	mWindow = glfwCreateWindow(1280, 720, "v1", nullptr, nullptr);
 	if (!mWindow)

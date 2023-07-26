@@ -19,6 +19,12 @@ void Mesh::setUVs(const std::vector<glm::vec2>& uvs1)
 	mDirty = true;
 }
 
+void Mesh::setNormals(const std::vector<glm::vec3>& normals)
+{
+	mNormals = normals;
+	mDirty = true;
+}
+
 void Mesh::use()
 {
 	if (mDirty)
@@ -63,17 +69,24 @@ void Mesh::genvram()
 	glBindVertexArray(mVao);
 
 	const auto sizeVertices = static_cast<int32_t>(mVertices.size() * sizeof(glm::vec3));
+	const auto sizeNormals = static_cast<int32_t>(mNormals.size() * sizeof(glm::vec3));
 	const auto sizeUVs = static_cast<int32_t>(mUVs.size() * sizeof(glm::vec2));
+
 	glGenBuffers(1, &mVbo);
 	glBindBuffer(GL_ARRAY_BUFFER, mVbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeVertices + sizeUVs, nullptr,GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeVertices + sizeNormals + sizeUVs, nullptr,GL_STATIC_DRAW);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeVertices, mVertices.data());
-	glBufferSubData(GL_ARRAY_BUFFER, sizeVertices, sizeUVs, mUVs.data());
+	glBufferSubData(GL_ARRAY_BUFFER, sizeVertices, sizeNormals, mNormals.data());
+	glBufferSubData(GL_ARRAY_BUFFER, sizeVertices + sizeNormals, sizeUVs, mUVs.data());
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), nullptr);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2), reinterpret_cast<const void*>(static_cast<int64_t>(sizeVertices)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3),
+	                      reinterpret_cast<const void*>(static_cast<int64_t>(sizeVertices)));
 	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(glm::vec2),
+	                      reinterpret_cast<const void*>(static_cast<int64_t>(sizeVertices + sizeNormals)));
+	glEnableVertexAttribArray(2);
 
 	glGenBuffers(1, &mEbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEbo);

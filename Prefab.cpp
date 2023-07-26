@@ -18,8 +18,9 @@ void Prefab::load(const std::string& path)
 
 	std::string line;
 	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-	std::vector<glm::vec3> vertices;
-	std::vector<glm::vec2> tangents;
+	std::vector<glm::vec3> modelVertices;
+	std::vector<glm::vec2> modelUVs;
+	std::vector<glm::vec3> modelNormals;
 	std::vector<glm::vec3> normals;
 	std::vector<glm::vec2> uvs;
 	std::vector<uint32_t> intices;
@@ -32,8 +33,9 @@ void Prefab::load(const std::string& path)
 			std::stringstream ss(line.erase(0, 2));
 			float x, y, z;
 			ss >> x >> y >> z;
-			vertices.emplace_back(x, y, z);
+			modelVertices.emplace_back(x, y, z);
 			uvs.emplace_back(0, 0);
+			normals.emplace_back(0, 0, 0);
 			continue;
 		}
 
@@ -42,7 +44,7 @@ void Prefab::load(const std::string& path)
 			std::stringstream ss(line.erase(0, 3));
 			float u, v;
 			ss >> u >> v;
-			tangents.emplace_back(u, 1 - v);
+			modelUVs.emplace_back(u, 1 - v);
 			continue;
 		}
 
@@ -51,7 +53,7 @@ void Prefab::load(const std::string& path)
 			std::stringstream ss(line.erase(0, 3));
 			float x, y, z;
 			ss >> x >> y >> z;
-			normals.emplace_back(x, y, z);
+			modelNormals.emplace_back(x, y, z);
 			continue;
 		}
 
@@ -72,13 +74,15 @@ void Prefab::load(const std::string& path)
 				int32_t nIndex = (stoi(n) - 1);
 
 				intices.push_back(vIndex);
-				uvs[vIndex] = tangents[tIndex];
+				uvs[vIndex] = modelUVs[tIndex];
+				normals[vIndex] = modelNormals[nIndex];
 			}
 		}
 	}
 
-	mesh->setVertices(vertices);
+	mesh->setVertices(modelVertices);
 	mesh->setUVs(uvs);
+	mesh->setNormals(normals);
 	mesh->setIndices(intices);
 
 	// Shader

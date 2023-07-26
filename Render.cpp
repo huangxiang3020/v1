@@ -23,8 +23,12 @@ void Render::draw(const std::shared_ptr<Camera>& camera) const
 	mShader->use();
 	mShader->setMat4("_Model", modelLocalToWorld);
 	mShader->setMat4("_ProjView", projView);
-	mShader->setVec4("_Color", glm::vec4(1, 1, 0, 0));
 	mShader->setInt("_MainTex", 0);
+	// Light
+	mShader->setVec3("_LightDirection", glm::vec3(0, 0, 1));
+	mShader->setVec4("_LightColor", glm::vec4(1, 1, 1, 1));
+	mShader->setVec4("_AmbientColor", glm::vec4(0.1f, 0.1f, 0.1f, 0.1f));
+
 	mTexture->active(0);
 	mMesh->use();
 }

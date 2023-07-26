@@ -14,7 +14,6 @@ void Shader::load(const std::string& vPath, const std::string& fPath)
 	{
 		vShaderStream << vfile.rdbuf();
 		fShaderStream << ffile.rdbuf();
-		// close file handlers
 		vfile.close();
 		ffile.close();
 	}
@@ -49,6 +48,11 @@ void Shader::setFloat(const std::string& name, float value) const
 void Shader::setVec4(const std::string& name, const glm::vec4& vec4) const
 {
 	glUniform4f(glGetUniformLocation(mId, name.c_str()), vec4.x, vec4.y, vec4.z, vec4.w);
+}
+
+void Shader::setVec3(const std::string& name, const glm::vec3& vec3) const
+{
+	glUniform3f(glGetUniformLocation(mId, name.c_str()), vec3.x, vec3.y, vec3.z);
 }
 
 void Shader::setMat4(const std::string& name, const glm::mat4& mat4) const

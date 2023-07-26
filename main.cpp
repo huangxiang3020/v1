@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 	camera->setNear(1);
 	camera->setFov(45);
 
-	// cube
+	// plane
 	const auto prefab = ResourceManager::instance().load<Prefab>("res/obj/ssylph.obj");
 	const auto prefabNode = prefab->getNode();
 	prefabNode->addComponent<Spin>();
