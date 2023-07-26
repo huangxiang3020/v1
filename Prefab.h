@@ -6,7 +6,7 @@ class Prefab
 {
 public:
 	Prefab() = default;
-	void load(std::string path);
+	void load(const std::string& path);
 	std::shared_ptr<Node> getNode();
 
 private:

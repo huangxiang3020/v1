@@ -8,8 +8,9 @@ int32_t GfxDevice::initalize()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_SAMPLES, 4);
 
-	mWindow = glfwCreateWindow(640, 480, "v1", nullptr, nullptr);
+	mWindow = glfwCreateWindow(1280, 720, "v1", nullptr, nullptr);
 	if (!mWindow)
 	{
 		glfwTerminate();
@@ -32,8 +33,10 @@ void GfxDevice::clearColor(const glm::vec4& color) const
 	glClearColor(color.r, color.g, color.b, color.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glFrontFace(GL_CW);
+	// glEnable(GL_CULL_FACE);
+	// glFrontFace(GL_CCW);
+	// glCullFace(GL_BACK);
+	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void GfxDevice::processInput() const

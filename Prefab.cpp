@@ -1,59 +1,92 @@
+#include <fstream>
+#include <iostream>
+#include <sstream>
 #include "Prefab.h"
 #include "Render.h"
 #include "ResourceManager.h"
 
-void Prefab::load(std::string path)
+void Prefab::load(const std::string& path)
 {
-	// Mesh
-	const auto mesh = std::make_shared<Mesh>();
-	const std::vector<glm::vec3> vertices{
-		glm::vec3(-0.5f, -0.5f, -0.5f), // Vertex 0
-		glm::vec3(0.5f, -0.5f, -0.5f), // Vertex 1
-		glm::vec3(0.5f, 0.5f, -0.5f), // Vertex 2
-		glm::vec3(-0.5f, 0.5f, -0.5f), // Vertex 3
-		glm::vec3(-0.5f, -0.5f, 0.5f), // Vertex 4
-		glm::vec3(0.5f, -0.5f, 0.5f), // Vertex 5
-		glm::vec3(0.5f, 0.5f, 0.5f), // Vertex 6
-		glm::vec3(-0.5f, 0.5f, 0.5f) // Vertex 7
-	};
+	mRootNode = std::make_shared<Node>();
 
-	const std::vector<glm::vec2> uvs{
-		glm::vec2(0.0f, 0.0f), // UV for Vertex 0
-		glm::vec2(1.0f, 0.0f), // UV for Vertex 1
-		glm::vec2(1.0f, 1.0f), // UV for Vertex 2
-		glm::vec2(0.0f, 1.0f), // UV for Vertex 3
-		glm::vec2(0.0f, 0.0f), // UV for Vertex 4
-		glm::vec2(1.0f, 0.0f), // UV for Vertex 5
-		glm::vec2(1.0f, 1.0f), // UV for Vertex 6
-		glm::vec2(0.0f, 1.0f) // UV for Vertex 7
-	};
+	std::ifstream fileStream(path);
+	if (!fileStream.is_open())
+	{
+		std::cout << " Prefab::load failed" << std::endl;
+		return;
+	}
 
-	const std::vector<uint32_t> intices{
-		0, 1, 2, // Face 1
-		2, 3, 0, // Face 2
-		1, 5, 6, // Face 3
-		6, 2, 1, // Face 4
-		7, 6, 5, // Face 5
-		5, 4, 7, // Face 6
-		4, 0, 3, // Face 7
-		3, 7, 4, // Face 8
-		4, 5, 1, // Face 9
-		1, 0, 4, // Face 10
-		3, 2, 6, // Face 11
-		6, 7, 3 // Face 12
-	};
+	std::string line;
+	std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+	std::vector<glm::vec3> vertices;
+	std::vector<glm::vec2> tangents;
+	std::vector<glm::vec3> normals;
+	std::vector<glm::vec2> uvs;
+	std::vector<uint32_t> intices;
+	while (!fileStream.eof())
+	{
+		getline(fileStream, line);
+
+		if (line.compare(0, 2, "v ") == 0)
+		{
+			std::stringstream ss(line.erase(0, 2));
+			float x, y, z;
+			ss >> x >> y >> z;
+			vertices.emplace_back(x, y, z);
+			uvs.emplace_back(0, 0);
+			continue;
+		}
+
+		if (line.compare(0, 3, "vt ") == 0)
+		{
+			std::stringstream ss(line.erase(0, 3));
+			float u, v;
+			ss >> u >> v;
+			tangents.emplace_back(u, 1 - v);
+			continue;
+		}
+
+		if (line.compare(0, 3, "vn ") == 0)
+		{
+			std::stringstream ss(line.erase(0, 3));
+			float x, y, z;
+			ss >> x >> y >> z;
+			normals.emplace_back(x, y, z);
+			continue;
+		}
+
+		if (line.compare(0, 2, "f ") == 0)
+		{
+			std::stringstream ss(line.erase(0, 2));
+			std::string oneCorner, v, t, n;
+			for (int i = 0; i < 3; ++i)
+			{
+				getline(ss, oneCorner, ' ');
+				std::stringstream oneCornerSS(oneCorner);
+				getline(oneCornerSS, v, '/');
+				getline(oneCornerSS, t, '/');
+				getline(oneCornerSS, n, '/');
+
+				int32_t vIndex = (stoi(v) - 1);
+				int32_t tIndex = (stoi(t) - 1);
+				int32_t nIndex = (stoi(n) - 1);
+
+				intices.push_back(vIndex);
+				uvs[vIndex] = tangents[tIndex];
+			}
+		}
+	}
+
 	mesh->setVertices(vertices);
 	mesh->setUVs(uvs);
 	mesh->setIndices(intices);
 
 	// Shader
-	const auto shader = ResourceManager::instance().load<Shader>("res/shader/vertex.vs", "res/shader/frag.fs");
-
+	const auto shader = ResourceManager::instance().load<Shader>(
+		"res/shader/vertex.vs", "res/shader/frag.fs");
 	// Texture
-	const auto texture = ResourceManager::instance().load<Texture>("res/image/container.jpg");
+	const auto texture = ResourceManager::instance().load<Texture>("res/obj/ssylph.jpg");
 
-	// cube
-	mRootNode = std::make_shared<Node>();
 	const auto render = mRootNode->addComponent<Render>();
 	render->setMesh(mesh);
 	render->setShader(shader);
