@@ -5,7 +5,7 @@
 #include <sstream>
 #include <glm/gtc/type_ptr.hpp>
 
-void Shader::load(const std::string& vPath, const std::string& fPath)
+bool Shader::load(const std::string& vPath, const std::string& fPath)
 {
 	std::ifstream vfile(vPath);
 	std::ifstream ffile(fPath);
@@ -20,9 +20,10 @@ void Shader::load(const std::string& vPath, const std::string& fPath)
 	else
 	{
 		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ:" << vPath << " " << fPath << std::endl;
+		return false;
 	}
 
-	loadCode(vShaderStream.str(), fShaderStream.str());
+	return loadCode(vShaderStream.str(), fShaderStream.str());
 }
 
 void Shader::use() const
@@ -65,7 +66,7 @@ Shader::~Shader()
 	glDeleteProgram(mId);
 }
 
-void Shader::checkCompileErrors(uint32_t shader, const std::string& type) const
+bool Shader::checkCompileErrors(uint32_t shader, const std::string& type) const
 {
 	int success;
 	char infoLog[1024];
@@ -89,27 +90,38 @@ void Shader::checkCompileErrors(uint32_t shader, const std::string& type) const
 				"\n -- --------------------------------------------------- -- " << std::endl;
 		}
 	}
+	return success;
 }
 
-void Shader::loadCode(const std::string& vertexCode, const std::string& fragmentCode)
+bool Shader::loadCode(const std::string& vertexCode, const std::string& fragmentCode)
 {
 	const char* vShaderCode = vertexCode.c_str();
 	const char* fShaderCode = fragmentCode.c_str();
 	const uint32_t vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vShaderCode, nullptr);
 	glCompileShader(vertexShader);
-	checkCompileErrors(vertexShader, "VERTEX");
+	if (!checkCompileErrors(vertexShader, "VERTEX"))
+	{
+		return false;
+	}
 
 	const uint32_t fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fShaderCode, nullptr);
 	glCompileShader(fragmentShader);
-	checkCompileErrors(fragmentShader, "FRAGMENT");
+	if (!checkCompileErrors(fragmentShader, "FRAGMENT"))
+	{
+		return false;
+	}
 
 	mId = glCreateProgram();
 	glAttachShader(mId, vertexShader);
 	glAttachShader(mId, fragmentShader);
 	glLinkProgram(mId);
-	checkCompileErrors(mId, "PROGRAM");
+	if (!checkCompileErrors(mId, "PROGRAM"))
+	{
+		return false;
+	}
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
+	return true;
 }

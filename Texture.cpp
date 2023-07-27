@@ -4,7 +4,7 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 
-void Texture::load(const std::string& filePath)
+bool Texture::load(const std::string& filePath)
 {
 	void* data = stbi_load(filePath.c_str(), &mWidth, &mHeight, &mChannels, 0);
 	if (data)
@@ -36,9 +36,11 @@ void Texture::load(const std::string& filePath)
 	else
 	{
 		std::cout << "Failed to load texture" << std::endl;
+		return false;
 	}
 
 	stbi_image_free(data);
+	return true;
 }
 
 void Texture::active(uint32_t location) const

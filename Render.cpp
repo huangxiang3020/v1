@@ -1,11 +1,8 @@
 #include "Render.h"
 
 #include "CameraManager.h"
+#include "LightManager.h"
 #include "RenderManager.h"
-
-Render::Render(const std::shared_ptr<Node>& node) : Component(node)
-{
-}
 
 void Render::draw(const std::shared_ptr<Camera>& camera) const
 {
@@ -14,7 +11,7 @@ void Render::draw(const std::shared_ptr<Camera>& camera) const
 	const auto cameraLocalToWorld = cameraNode->getLocalToWorldMatrix();
 
 	const glm::vec3 cameraForward = glm::normalize(glm::vec3(cameraLocalToWorld[2]));
-	const glm::vec3 cameraTarget = cameraNode->getPosition() + cameraForward;
+	const glm::vec3 cameraTarget = cameraNode->getPosition() - cameraForward;
 	const auto view = glm::lookAt(cameraNode->getPosition(), cameraTarget,
 	                              glm::normalize(glm::vec3(cameraLocalToWorld[1])));
 	const auto proj = glm::perspective(camera->getFov(), camera->getAspect(), camera->getNear(), camera->getFar());
@@ -24,10 +21,16 @@ void Render::draw(const std::shared_ptr<Camera>& camera) const
 	mShader->setMat4("_Model", modelLocalToWorld);
 	mShader->setMat4("_ProjView", projView);
 	mShader->setInt("_MainTex", 0);
+
 	// Light
-	mShader->setVec3("_LightDirection", glm::vec3(0, 0, 1));
-	mShader->setVec4("_LightColor", glm::vec4(1, 1, 1, 1));
-	mShader->setVec4("_AmbientColor", glm::vec4(0.1f, 0.1f, 0.1f, 0.1f));
+	const auto lights = LightManager::instance().getLights();
+	if (!lights.empty())
+	{
+		const auto& light = lights[0];
+		mShader->setVec3("_LightDirection", light->getDirection());
+		mShader->setVec4("_LightColor", light->getLightColor());
+		mShader->setVec4("_AmbientColor", light->getAmbientColor());
+	}
 
 	mTexture->active(0);
 	mMesh->use();

@@ -64,6 +64,17 @@ glm::vec3 Node::getLocalEulerAngles() const
 	return glm::degrees(eulerAngles(mLocalRotation));
 }
 
+void Node::setLocalRotation(const glm::quat& rotation)
+{
+	mLocalRotation = rotation;
+	updateTransform();
+}
+
+glm::quat Node::getLocalRotation() const
+{
+	return mLocalRotation;
+}
+
 glm::mat4 Node::getLocalToWorldMatrix() const
 {
 	return mLocalToWorldMatrix;

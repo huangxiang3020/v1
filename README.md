@@ -1,8 +1,6 @@
 # v1
   
-- [x] Left-Handed Coordinate 
-![Coordinate](/img/coordinate.png)
-
+- [x] Right-Handed Coordinate 
 - [x] $p = proj * view * model * \bar{p} $
 $$\left[ \begin{matrix}
    x \\
@@ -58,20 +56,25 @@ graph TB
       CameraManager
       RenderManager
       ResourceManager
+      LightManager
     end
 
     Scene-->Node
     Scene.->Managers
 
     Prefab
+    Prefab-->Node
 
+    Light
     Camera
     Render
     Render.->Shader
     Render.->Texture
     Render.->Mesh
+    Render.->Light
     Component---Camera
     Component---Render
+    Component---Light
     Device-->Mesh
     Device-->Shader
     Device-->Texture

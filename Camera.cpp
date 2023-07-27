@@ -1,10 +1,6 @@
 #include "Camera.h"
 #include "CameraManager.h"
 
-Camera::Camera(const std::shared_ptr<Node>& node): Component(node)
-{
-}
-
 void Camera::setNear(float near)
 {
 	mNear = near;

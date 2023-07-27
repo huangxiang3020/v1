@@ -7,8 +7,8 @@
 
 class Render : public Component, public std::enable_shared_from_this<Render>
 {
+	using Component::Component;
 public:
-	Render(const std::shared_ptr<Node>& node);
 	void draw(const std::shared_ptr<Camera>& camera) const;
 	void awake() override;
 	void onDestroy() override;

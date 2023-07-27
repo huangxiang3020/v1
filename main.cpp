@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Scene.h"
 #include "CameraManager.h"
+#include "Light.h"
 #include "Prefab.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
@@ -20,12 +21,18 @@ int main(int argc, char* argv[])
 
 	// camera
 	const auto cameraNode = std::make_shared<Node>();
-	cameraNode->setLocalPosition(glm::vec3(0, 0, -200));
+	cameraNode->setLocalPosition(glm::vec3(0, 0, 200));
 	const auto camera = cameraNode->addComponent<Camera>();
 	camera->setAspect(1280.f / 720);
 	camera->setFar(1000);
 	camera->setNear(1);
 	camera->setFov(45);
+
+	// light
+	const auto lightNode = std::make_shared<Node>();
+	const auto light = lightNode->addComponent<Light>();
+	light->setLightColor(glm::vec4(1, 1, 1, 1));
+	light->setDirection(glm::vec3(0, -1, -1));
 
 	// plane
 	const auto prefab = ResourceManager::instance().load<Prefab>("res/obj/ssylph.obj");

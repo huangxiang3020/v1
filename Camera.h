@@ -3,9 +3,8 @@
 
 class Camera : public Component, public std::enable_shared_from_this<Camera>
 {
+	using Component::Component;
 public:
-	Camera(const std::shared_ptr<Node>& node);
-
 	void setNear(float near);
 	float getNear() const;
 	void setFar(float far);

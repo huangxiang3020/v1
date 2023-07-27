@@ -3,7 +3,7 @@
 
 class Spin : public Component
 {
+	using Component::Component;
 public:
-	Spin(const std::shared_ptr<Node>& node);
 	void update() override;
 };

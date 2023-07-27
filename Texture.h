@@ -6,7 +6,7 @@ class Texture
 {
 public:
 	Texture() = default;
-	auto load(const std::string& filePath) -> void;
+	bool load(const std::string& filePath);
 	void active(uint32_t location) const;
 	~Texture();
 

@@ -3,7 +3,7 @@
 #include "Render.h"
 #include "ResourceManager.h"
 
-void Prefab::load(const std::string& path)
+bool Prefab::load(const std::string& path)
 {
 	Assimp::Importer importer;
 	const auto scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -12,10 +12,11 @@ void Prefab::load(const std::string& path)
 	{
 		mRootNode = std::make_shared<Node>();
 		std::cout << " Prefab::load failed" << std::endl;
-		return;
+		return false;
 	}
 
 	mRootNode = processAINode(scene->mRootNode, scene);
+	return true;
 }
 
 std::shared_ptr<Node> Prefab::processAINode(const aiNode* aiNode, const aiScene* aiScene) const

@@ -1,12 +1,8 @@
 #include "Spin.h"
 
-Spin::Spin(const std::shared_ptr<Node>& node) : Component(node)
-{
-}
-
 void Spin::update()
 {
-	static float angle = 0;
-	angle++;
-	getNode()->setLocalEulerAngles(glm::vec3(0, angle, 0));
+	const auto rotation = getNode()->getLocalRotation();
+	const auto q = glm::quat(glm::radians(glm::vec3(0, 1, 0)));
+	getNode()->setLocalRotation(rotation * q);
 }

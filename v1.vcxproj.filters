@@ -32,6 +32,8 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Prefab.cpp" />
     <ClCompile Include="Spin.cpp" />
+    <ClCompile Include="LightManager.cpp" />
+    <ClCompile Include="Light.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GfxDevice.h">
@@ -56,5 +58,7 @@
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Prefab.h" />
     <ClInclude Include="Spin.h" />
+    <ClInclude Include="LightManager.h" />
+    <ClInclude Include="Light.h" />
   </ItemGroup>
 </Project>
