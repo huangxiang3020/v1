@@ -1,7 +1,7 @@
 #pragma once
 #include "Node.h"
-
-class Camera : public Component, public std::enable_shared_from_this<Camera>
+class Node;
+class Camera : public Component
 {
 	using Component::Component;
 public:

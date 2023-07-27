@@ -3,13 +3,13 @@
 
 void Light::awake()
 {
-	const auto light = shared_from_this();
+	const auto light = std::dynamic_pointer_cast<Light>(shared_from_this());
 	LightManager::instance().add(light);
 }
 
 void Light::onDestroy()
 {
-	const auto light = shared_from_this();
+	const auto light = std::dynamic_pointer_cast<Light>(shared_from_this());
 	LightManager::instance().remove(light);
 }
 

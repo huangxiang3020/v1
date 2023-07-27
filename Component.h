@@ -1,9 +1,10 @@
 #pragma once
 #include "Node.h"
+#include "Object.h"
 
 class Node;
 
-class Component
+class Component : public Object, public std::enable_shared_from_this<Component>
 {
 	friend class Node;
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 
-class Light : public Component, public std::enable_shared_from_this<Light>
+class Light : public Component
 {
 	using Component::Component;
 

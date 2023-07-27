@@ -4,10 +4,11 @@
 #include <vector>
 #include <memory>
 #include "Component.h"
+#include "Object.h"
 
 class Component;
 
-class Node : public std::enable_shared_from_this<Node>
+class Node : public Object, public std::enable_shared_from_this<Node>
 {
 	friend class Component;
 public:

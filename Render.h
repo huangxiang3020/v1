@@ -5,7 +5,7 @@
 #include "Texture.h"
 #include "Shader.h"
 
-class Render : public Component, public std::enable_shared_from_this<Render>
+class Render : public Component
 {
 	using Component::Component;
 public:

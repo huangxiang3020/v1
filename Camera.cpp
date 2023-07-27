@@ -43,12 +43,12 @@ float Camera::getAspect() const
 
 void Camera::awake()
 {
-	const auto camera = shared_from_this();
+	const auto camera = std::dynamic_pointer_cast<Camera>(shared_from_this());
 	CameraManager::instance().add(camera);
 }
 
 void Camera::onDestroy()
 {
-	const auto camera = shared_from_this();
+	const auto camera = std::dynamic_pointer_cast<Camera>(shared_from_this());
 	CameraManager::instance().remove(camera);
 }

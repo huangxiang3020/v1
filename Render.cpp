@@ -38,13 +38,13 @@ void Render::draw(const std::shared_ptr<Camera>& camera) const
 
 void Render::awake()
 {
-	const auto render = shared_from_this();
+	const auto render = std::dynamic_pointer_cast<Render>(shared_from_this());
 	RenderManager::instance().add(render);
 }
 
 void Render::onDestroy()
 {
-	const auto render = shared_from_this();
+	const auto render = std::dynamic_pointer_cast<Render>(shared_from_this());
 	RenderManager::instance().remove(render);
 }
 
