@@ -43,7 +43,7 @@ int main(int argc, char* argv[])
 		scene->updatePhase();
 
 		// startDraw
-		device->clearColor(glm::vec4(0.5, 0.5, 0.5, 1));
+		device->clearColor(glm::vec4(1, 1, 1, 1));
 		for (const std::shared_ptr<Camera>& renderCamera : CameraManager::instance().getCameras())
 		{
 			for (const std::shared_ptr<Render>& render : RenderManager::instance().getRenders())

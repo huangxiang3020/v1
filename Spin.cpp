@@ -1,6 +1,6 @@
 #include "Spin.h"
 
-Spin::Spin(const std::shared_ptr<Node>& node) :Component(node)
+Spin::Spin(const std::shared_ptr<Node>& node) : Component(node)
 {
 }
 

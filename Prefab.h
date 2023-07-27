@@ -1,5 +1,8 @@
 #pragma once
 #include <string>
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 #include "Node.h"
 
 class Prefab
@@ -11,4 +14,5 @@ public:
 
 private:
 	std::shared_ptr<Node> mRootNode;
+	std::shared_ptr<Node> processAINode(const aiNode* aiNode, const aiScene* aiScene) const;
 };

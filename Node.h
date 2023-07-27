@@ -22,8 +22,8 @@ public:
 	glm::vec3 getLocalScale() const;
 	void setLocalEulerAngles(const glm::vec3& eulerAngles);
 	glm::vec3 getLocalEulerAngles() const;
-	glm::mat4 getLocalToWorldMatrix();
-	glm::vec3 getPosition();
+	glm::mat4 getLocalToWorldMatrix() const;
+	glm::vec3 getPosition() const;
 
 	template <typename T>
 	std::shared_ptr<T> addComponent();
@@ -42,7 +42,6 @@ protected:
 	std::vector<std::shared_ptr<Component>> mComponents = {};
 
 private:
-	bool mDirty = true;
 	void updateTransform();
 	void innerDestroy() const;
 };
