@@ -11,15 +11,17 @@ bool Prefab::load(const std::string& path)
 	if (scene == nullptr)
 	{
 		mRootNode = std::make_shared<Node>();
-		std::cout << " Prefab::load failed" << std::endl;
+		std::cout << "Prefab::load failed:" << path << std::endl;
 		return false;
 	}
 
-	mRootNode = processAINode(scene->mRootNode, scene);
+	const std::string objDirectory = path.substr(0, path.find_last_of("/"));
+	mRootNode = processAINode(scene->mRootNode, scene, objDirectory);
 	return true;
 }
 
-std::shared_ptr<Node> Prefab::processAINode(const aiNode* aiNode, const aiScene* aiScene) const
+std::shared_ptr<Node> Prefab::processAINode(const aiNode* aiNode, const aiScene* aiScene,
+                                            const std::string& objDirectory) const
 {
 	const auto node = std::make_shared<Node>();
 	for (uint32_t i = 0; i < aiNode->mNumMeshes; ++i)
@@ -70,12 +72,14 @@ std::shared_ptr<Node> Prefab::processAINode(const aiNode* aiNode, const aiScene*
 		mesh->setNormals(normals);
 		mesh->setIndices(indices);
 
+		const auto aiMaterial = aiScene->mMaterials[aiMesh->mMaterialIndex];
+		const auto diffuseTexturePath = getTexturePath(aiMaterial, aiTextureType_DIFFUSE);
+
+		// Texture
+		const auto texture = ResourceManager::instance().load<Texture>((objDirectory + "/").append(diffuseTexturePath));
 		// Shader
 		const auto shader = ResourceManager::instance().load<Shader>(
 			"res/shader/vertex.vs", "res/shader/frag.fs");
-		// Texture
-		const auto texture = ResourceManager::instance().load<Texture>("res/obj/ssylph.jpg");
-
 		const auto meshNode = std::make_shared<Node>();
 		const auto render = meshNode->addComponent<Render>();
 		render->setMesh(mesh);
@@ -86,11 +90,22 @@ std::shared_ptr<Node> Prefab::processAINode(const aiNode* aiNode, const aiScene*
 
 	for (uint32_t i = 0; i < aiNode->mNumChildren; ++i)
 	{
-		const auto childNode = processAINode(aiNode->mChildren[i], aiScene);
+		const auto childNode = processAINode(aiNode->mChildren[i], aiScene, objDirectory);
 		node->addChild(childNode);
 	}
 
 	return node;
+}
+
+std::string Prefab::getTexturePath(const aiMaterial* aiMaterial, aiTextureType aiTextureType) const
+{
+	for (uint32_t i = 0; i < aiMaterial->GetTextureCount(aiTextureType); ++i)
+	{
+		aiString str;
+		aiMaterial->GetTexture(aiTextureType_DIFFUSE, i, &str);
+		return str.C_Str();
+	}
+	return "";
 }
 
 std::shared_ptr<Node> Prefab::getNode()

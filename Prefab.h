@@ -14,5 +14,6 @@ public:
 
 private:
 	std::shared_ptr<Node> mRootNode;
-	std::shared_ptr<Node> processAINode(const aiNode* aiNode, const aiScene* aiScene) const;
+	std::shared_ptr<Node> processAINode(const aiNode* aiNode, const aiScene* aiScene, const std::string& objDirectory) const;
+	std::string getTexturePath(const aiMaterial* aiMaterial, aiTextureType aiTextureType) const;
 };

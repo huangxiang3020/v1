@@ -21,7 +21,7 @@ int main(int argc, char* argv[])
 
 	// camera
 	const auto cameraNode = std::make_shared<Node>();
-	cameraNode->setLocalPosition(glm::vec3(0, 0, 200));
+	cameraNode->setLocalPosition(glm::vec3(0, 0, 5));
 	const auto camera = cameraNode->addComponent<Camera>();
 	camera->setAspect(1280.f / 720);
 	camera->setFar(1000);
@@ -34,15 +34,17 @@ int main(int argc, char* argv[])
 	light->setLightColor(glm::vec4(1, 1, 1, 1));
 	light->setDirection(glm::vec3(0, -1, -1));
 
-	// plane
-	const auto prefab = ResourceManager::instance().load<Prefab>("res/obj/ssylph.obj");
-	const auto prefabNode = prefab->getNode();
-	prefabNode->addComponent<Spin>();
+	// pet
+	const auto petPrefab = ResourceManager::instance().load<Prefab>("res/model/fbx/pet004/pet004.fbx");
+	const auto petPrefabNode = petPrefab->getNode();
+	petPrefabNode->setLocalEulerAngles(glm::vec3(-90, 0, 0));
+	petPrefabNode->setLocalPosition(glm::vec3(0, -1, 0));
+	petPrefabNode->addComponent<Spin>();
 
 	// scene
 	const auto scene = std::make_shared<Scene>();
 	scene->getNode()->addChild(cameraNode);
-	scene->getNode()->addChild(prefabNode);
+	scene->getNode()->addChild(petPrefabNode);
 
 	while (!device->shouldQuit())
 	{
