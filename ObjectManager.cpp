@@ -6,12 +6,12 @@ ObjectManager& ObjectManager::instance()
 	return instance;
 }
 
-void ObjectManager::add(const std::shared_ptr<Object>& object)
+void ObjectManager::add(Object* object)
 {
 	mObjects.push_back(object);
 }
 
-void ObjectManager::remove(const std::shared_ptr<Object>& object)
+void ObjectManager::remove(const Object* object)
 {
 	for (auto it = mObjects.begin(); it != mObjects.end(); ++it)
 	{
@@ -23,7 +23,7 @@ void ObjectManager::remove(const std::shared_ptr<Object>& object)
 	}
 }
 
-std::vector<std::shared_ptr<Object>>& ObjectManager::getObjects()
+std::vector<Object*>& ObjectManager::getObjects()
 {
 	return mObjects;
 }

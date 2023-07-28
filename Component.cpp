@@ -20,7 +20,7 @@ void Component::onDestroy()
 
 std::shared_ptr<Node> Component::getNode() const
 {
-	return mNode;
+	return mNode.lock();
 }
 
 void Component::destroy()

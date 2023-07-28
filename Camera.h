@@ -5,6 +5,11 @@ class Camera : public Component
 {
 	using Component::Component;
 public:
+	ClassIDType getClassIDType() const override
+	{
+		return ClassID(Camera);
+	}
+
 	void setNear(float near);
 	float getNear() const;
 	void setFar(float far);

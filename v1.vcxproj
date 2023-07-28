@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="ClassIDs.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="GfxDevice.h" />
     <ClInclude Include="Light.h" />

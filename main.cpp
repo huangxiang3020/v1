@@ -1,3 +1,4 @@
+#include <iostream>
 #include <glm/glm.hpp>
 #include "GfxDevice.h"
 #include "Camera.h"
@@ -5,6 +6,7 @@
 #include "Scene.h"
 #include "CameraManager.h"
 #include "Light.h"
+#include "ObjectManager.h"
 #include "Prefab.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
@@ -18,7 +20,6 @@ int main(int argc, char* argv[])
 	{
 		return ret;
 	}
-
 	// camera
 	const auto cameraNode = std::make_shared<Node>();
 	cameraNode->setLocalPosition(glm::vec3(0, 0, 5));
@@ -46,6 +47,11 @@ int main(int argc, char* argv[])
 	scene->getNode()->addChild(cameraNode);
 	scene->getNode()->addChild(petPrefabNode);
 
+	// for (const auto object : ObjectManager::instance().getObjects())
+	// {
+	// 	std::cout << object->getClassIDType() << std::endl;
+	// }
+
 	while (!device->shouldQuit())
 	{
 		device->processInput();
@@ -63,7 +69,6 @@ int main(int argc, char* argv[])
 		device->swap();
 		// endDraw
 	}
-
 	device->terminate();
 
 	return 0;

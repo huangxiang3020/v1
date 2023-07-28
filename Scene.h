@@ -1,11 +1,17 @@
 #pragma once
 #include "Node.h"
 
-class Scene
+class Scene : public Object
 {
 public:
 	Scene();
-	~Scene();
+	~Scene() override;
+
+	ClassIDType getClassIDType() const override
+	{
+		return ClassID(Scene);
+	}
+
 	void updatePhase() const;
 	std::shared_ptr<Node> getNode();
 

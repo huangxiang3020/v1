@@ -34,6 +34,8 @@
     <ClCompile Include="Spin.cpp" />
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GfxDevice.h">
@@ -60,5 +62,8 @@
     <ClInclude Include="Spin.h" />
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="ClassIDs.h" />
   </ItemGroup>
 </Project>

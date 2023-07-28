@@ -6,6 +6,10 @@ class Light : public Component
 	using Component::Component;
 
 public:
+	ClassIDType getClassIDType() const override
+	{
+		return ClassID(Light);
+	}
 	void awake() override;
 	void onDestroy() override;
 	void setDirection(const glm::vec3& direction);

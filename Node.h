@@ -11,9 +11,13 @@ class Component;
 class Node : public Object, public std::enable_shared_from_this<Node>
 {
 	friend class Component;
+
 public:
-	Node() = default;
-	virtual ~Node() = default;
+	ClassIDType getClassIDType() const override
+	{
+		return ClassID(Node);
+	}
+
 	void setParent(const std::shared_ptr<Node>& parent);
 	void addChild(const std::shared_ptr<Node>& child);
 	void removeChild(const std::shared_ptr<Node>& child);
@@ -41,7 +45,7 @@ protected:
 	glm::mat4 mLocalToWorldMatrix{};
 	glm::vec3 mPosition = {0, 0, 0};
 	std::vector<std::shared_ptr<Node>> mChildren = {};
-	std::shared_ptr<Node> mParent = nullptr;
+	std::weak_ptr<Node> mParent;
 	std::vector<std::shared_ptr<Component>> mComponents = {};
 
 private:

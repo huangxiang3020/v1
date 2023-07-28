@@ -9,6 +9,10 @@ class Render : public Component
 {
 	using Component::Component;
 public:
+	ClassIDType getClassIDType() const override
+	{
+		return ClassID(Render);
+	}
 	void draw(const std::shared_ptr<Camera>& camera) const;
 	void awake() override;
 	void onDestroy() override;

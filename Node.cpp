@@ -2,11 +2,11 @@
 
 void Node::setParent(const std::shared_ptr<Node>& parent)
 {
-	if (parent == mParent)
+	if (parent == mParent.lock())
 	{
 		return;
 	}
-	mParent->removeChild(shared_from_this());
+	mParent.lock()->removeChild(shared_from_this());
 	parent->addChild(shared_from_this());
 }
 
@@ -27,7 +27,7 @@ void Node::removeChild(const std::shared_ptr<Node>& child)
 			if (it == mChildren.end()) break;
 		}
 	}
-	child->mParent = nullptr;
+	child->mParent.reset();
 	updateTransform();
 }
 
@@ -102,14 +102,14 @@ void Node::destroy()
 {
 	innerDestroy();
 
-	if (mParent != nullptr)
+	if (!mParent.expired())
 	{
-		for (auto it = mParent->mChildren.begin(); it != mParent->mChildren.end(); ++it)
+		for (auto it = mParent.lock()->mChildren.begin(); it != mParent.lock()->mChildren.end(); ++it)
 		{
 			if (*it == shared_from_this())
 			{
-				it = mParent->mChildren.erase(it);
-				if (it == mParent->mChildren.end()) break;
+				it = mParent.lock()->mChildren.erase(it);
+				if (it == mParent.lock()->mChildren.end()) break;
 			}
 		}
 	}
@@ -123,13 +123,13 @@ void Node::updateTransform()
 	const auto scale = glm::scale(glm::mat4(1.0f), mLocalScale);
 	const auto model = translation * scale * rotation;
 
-	if (mParent == nullptr)
+	if (mParent.expired())
 	{
 		mLocalToWorldMatrix = model;
 	}
 	else
 	{
-		mLocalToWorldMatrix = mParent->mLocalToWorldMatrix * model;
+		mLocalToWorldMatrix = mParent.lock()->mLocalToWorldMatrix * model;
 	}
 
 	mPosition = mLocalToWorldMatrix * glm::vec4(0, 0, 0, 1);

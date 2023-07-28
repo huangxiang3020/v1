@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <memory>
 #include "Object.h"
 class Object;
 
@@ -13,22 +12,11 @@ public:
 	ObjectManager(const ObjectManager&) = delete;
 	ObjectManager& operator=(const ObjectManager&) = delete;
 
-	std::vector<std::shared_ptr<Object>>& getObjects();
-
-	template <typename T>
-	std::shared_ptr<T> newObject();
+	std::vector<Object*>& getObjects();
 
 private:
-	void add(const std::shared_ptr<Object>& object);
-	void remove(const std::shared_ptr<Object>& object);
+	void add(Object* object);
+	void remove(const Object* object);
 	ObjectManager() = default;
-	std::vector<std::shared_ptr<Object>> mObjects;
+	std::vector<Object*> mObjects;
 };
-
-template <typename T>
-std::shared_ptr<T> ObjectManager::newObject()
-{
-	auto newObject = std::make_shared<T>();
-	add(newObject);
-	return newObject;
-}
