@@ -3,13 +3,8 @@
 
 class Light : public Component
 {
+	REGISTER_CLASS(Light)
 	using Component::Component;
-
-public:
-	ClassIDType getClassIDType() const override
-	{
-		return ClassID(Light);
-	}
 	void awake() override;
 	void onDestroy() override;
 	void setDirection(const glm::vec3& direction);

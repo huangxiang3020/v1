@@ -1,15 +1,11 @@
 #pragma once
 #include "Node.h"
 class Node;
+
 class Camera : public Component
 {
+	REGISTER_CLASS(Camera)
 	using Component::Component;
-public:
-	ClassIDType getClassIDType() const override
-	{
-		return ClassID(Camera);
-	}
-
 	void setNear(float near);
 	float getNear() const;
 	void setFar(float far);

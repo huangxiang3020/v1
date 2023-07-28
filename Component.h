@@ -1,18 +1,13 @@
 #pragma once
+#include "ObjectDefines.h"
 #include "Node.h"
 #include "Object.h"
-
 class Node;
 
 class Component : public Object, public std::enable_shared_from_this<Component>
 {
+	REGISTER_CLASS(Component)
 	friend class Node;
-
-public:
-	ClassIDType getClassIDType() const override
-	{
-		return ClassID(Component);
-	}
 	Component(const std::shared_ptr<Node>& node);
 	std::shared_ptr<Node> getNode() const;
 	void destroy();

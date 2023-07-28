@@ -3,15 +3,9 @@
 
 class Scene : public Object
 {
-public:
+	REGISTER_CLASS(Scene)
 	Scene();
 	~Scene() override;
-
-	ClassIDType getClassIDType() const override
-	{
-		return ClassID(Scene);
-	}
-
 	void updatePhase() const;
 	std::shared_ptr<Node> getNode();
 

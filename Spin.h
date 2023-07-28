@@ -3,11 +3,7 @@
 
 class Spin : public Component
 {
+	REGISTER_CLASS(Spin)
 	using Component::Component;
-public:
-	ClassIDType getClassIDType() const override
-	{
-		return ClassID(Spin);
-	}
 	void update() override;
 };

@@ -7,11 +7,7 @@
 
 class Prefab : public Object
 {
-public:
-	ClassIDType getClassIDType() const override
-	{
-		return ClassID(Node);
-	}
+	REGISTER_CLASS(Prefab)
 	bool load(const std::string& path);
 	std::shared_ptr<Node> getNode();
 

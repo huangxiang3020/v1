@@ -3,10 +3,12 @@
 #include <string>
 #include <glm/vec4.hpp>
 #include <glm/mat4x4.hpp>
+#include "Object.h"
+#include "ObjectDefines.h"
 
-class Shader
+class Shader : public Object
 {
-public:
+	REGISTER_CLASS(Shader)
 	Shader() = default;
 	bool load(const std::string& vPath, const std::string& fPath);
 	void use() const;
@@ -16,7 +18,7 @@ public:
 	void setVec4(const std::string& name, const glm::vec4& vec4) const;
 	void setVec3(const std::string& name, const glm::vec3& vec3) const;
 	void setMat4(const std::string& name, const glm::mat4& mat4) const;
-	~Shader();
+	~Shader() override;
 
 private:
 	uint32_t mId = 0;

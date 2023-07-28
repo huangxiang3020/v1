@@ -45,12 +45,8 @@ int main(int argc, char* argv[])
 	// scene
 	const auto scene = std::make_shared<Scene>();
 	scene->getNode()->addChild(cameraNode);
+	scene->getNode()->addChild(lightNode);
 	scene->getNode()->addChild(petPrefabNode);
-
-	// for (const auto object : ObjectManager::instance().getObjects())
-	// {
-	// 	std::cout << object->getClassIDType() << std::endl;
-	// }
 
 	while (!device->shouldQuit())
 	{
@@ -69,6 +65,7 @@ int main(int argc, char* argv[])
 		device->swap();
 		// endDraw
 	}
+
 	device->terminate();
 
 	return 0;

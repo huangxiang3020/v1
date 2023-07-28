@@ -4,7 +4,6 @@
 
 enum ClassIDType
 {
-	DefineClassID(Undefined, -1)
 	DefineClassID(Object, 0)
 	DefineClassID(Node, 1)
 	DefineClassID(Component, 2)
@@ -14,4 +13,7 @@ enum ClassIDType
 	DefineClassID(Spin, 6)
 	DefineClassID(Prefab, 7)
 	DefineClassID(Scene, 8)
+	DefineClassID(Mesh, 9)
+	DefineClassID(Shader, 9)
+	DefineClassID(Texture, 10)
 };

@@ -3,6 +3,7 @@
 #include <glm/gtc/quaternion.hpp>
 #include <vector>
 #include <memory>
+#include "ObjectDefines.h"
 #include "Component.h"
 #include "Object.h"
 
@@ -10,14 +11,8 @@ class Component;
 
 class Node : public Object, public std::enable_shared_from_this<Node>
 {
+	REGISTER_CLASS(Node)
 	friend class Component;
-
-public:
-	ClassIDType getClassIDType() const override
-	{
-		return ClassID(Node);
-	}
-
 	void setParent(const std::shared_ptr<Node>& parent);
 	void addChild(const std::shared_ptr<Node>& child);
 	void removeChild(const std::shared_ptr<Node>& child);

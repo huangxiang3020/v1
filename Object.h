@@ -1,23 +1,22 @@
 #pragma once
 #include <cstdint>
+#include <string>
+
 #include "ClassIDs.h"
 
 class Object
 {
-private:
 	static int32_t sNextId;
 
 public:
-	virtual ClassIDType getClassIDType() const
-	{
-		return ClassID(Object);
-	}
-
-public:
+	virtual std::string getClassName() { return "Object"; }
+	virtual ClassIDType getClassID() const { return ClassID(Object); }
+	int32_t getID() const { return mID; }
 	Object();
-	virtual ~Object();
-	static int32_t getNextId();
+	Object(const Object& object) = delete;
+	Object& operator =(const Object& object) = delete;
 
 protected:
-	int32_t mId = 0;
+	virtual ~Object();
+	int32_t mID = 0;
 };

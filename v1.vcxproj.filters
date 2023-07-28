@@ -65,5 +65,6 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="ClassIDs.h" />
+    <ClInclude Include="ObjectDefines.h" />
   </ItemGroup>
 </Project>
