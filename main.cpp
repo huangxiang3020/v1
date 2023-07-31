@@ -1,4 +1,3 @@
-#include <iostream>
 #include <glm/glm.hpp>
 #include "GfxDevice.h"
 #include "Camera.h"
@@ -49,7 +48,6 @@ int main(int argc, char* argv[])
 	scene->getNode()->addChild(lightNode);
 	scene->getNode()->addChild(petPrefabNode);
 
-	TimeManger::instance().awake();
 	while (!device->shouldQuit())
 	{
 		device->processInput();
