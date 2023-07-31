@@ -10,6 +10,7 @@
 #include "Prefab.h"
 #include "RenderManager.h"
 #include "ResourceManager.h"
+#include "TimeManger.h"
 #include "Spin.h"
 
 int main(int argc, char* argv[])
@@ -48,9 +49,11 @@ int main(int argc, char* argv[])
 	scene->getNode()->addChild(lightNode);
 	scene->getNode()->addChild(petPrefabNode);
 
+	TimeManger::instance().awake();
 	while (!device->shouldQuit())
 	{
 		device->processInput();
+		TimeManger::instance().update();
 		scene->updatePhase();
 
 		// startDraw

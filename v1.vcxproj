@@ -152,6 +152,7 @@
     <ClCompile Include="Spin.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="TimeManger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Spin.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="TimeManger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -36,6 +36,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="TimeManger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GfxDevice.h">
@@ -66,5 +67,6 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="ClassIDs.h" />
     <ClInclude Include="ObjectDefines.h" />
+    <ClInclude Include="TimeManger.h" />
   </ItemGroup>
 </Project>
