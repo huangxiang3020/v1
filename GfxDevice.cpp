@@ -1,4 +1,5 @@
 #include "GfxDevice.h"
+#include "InputManager.h"
 
 int32_t GfxDevice::initalize()
 {
@@ -24,6 +25,8 @@ int32_t GfxDevice::initalize()
 	{
 		return -1;
 	}
+
+	InputManager::instance().setWindow(mWindow);
 
 	return 0;
 }
@@ -54,6 +57,11 @@ void GfxDevice::swap() const
 bool GfxDevice::shouldQuit() const
 {
 	return glfwWindowShouldClose(mWindow);
+}
+
+void GfxDevice::quit() const
+{
+	glfwSetWindowShouldClose(mWindow, true);
 }
 
 void GfxDevice::terminate() const

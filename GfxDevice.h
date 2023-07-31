@@ -12,6 +12,7 @@ public:
 	void processInput() const;
 	void swap() const;
 	bool shouldQuit() const;
+	void quit() const;
 	void terminate() const;
 
 private:

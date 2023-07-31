@@ -20,6 +20,7 @@ int main(int argc, char* argv[])
 	{
 		return ret;
 	}
+
 	// camera
 	const auto cameraNode = std::make_shared<Node>();
 	cameraNode->setLocalPosition(glm::vec3(0, 0, 5));
