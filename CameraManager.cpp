@@ -8,12 +8,12 @@ CameraManager& CameraManager::instance()
 }
 
 
-void CameraManager::add(Camera* camera)
+void CameraManager::add(const std::shared_ptr<Camera>& camera)
 {
 	mCameras.push_back(camera);
 }
 
-void CameraManager::remove(Camera* camera)
+void CameraManager::remove(const std::shared_ptr<Camera>& camera)
 {
 	for (auto it = mCameras.begin(); it != mCameras.end(); ++it)
 	{
@@ -25,7 +25,7 @@ void CameraManager::remove(Camera* camera)
 	}
 }
 
-std::vector<Camera*>& CameraManager::getCameras()
+std::vector<std::shared_ptr<Camera>>& CameraManager::getCameras()
 {
 	return mCameras;
 }

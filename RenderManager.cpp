@@ -6,12 +6,12 @@ RenderManager& RenderManager::instance()
 	return instance;
 }
 
-void RenderManager::add(Render* render)
+void RenderManager::add(const std::shared_ptr<Render>& render)
 {
 	mRenders.push_back(render);
 }
 
-void RenderManager::remove(Render* render)
+void RenderManager::remove(const std::shared_ptr<Render>& render)
 {
 	for (auto it = mRenders.begin(); it != mRenders.end(); ++it)
 	{
@@ -23,7 +23,7 @@ void RenderManager::remove(Render* render)
 	}
 }
 
-std::vector<Render*>& RenderManager::getRenders()
+std::vector<std::shared_ptr<Render>>& RenderManager::getRenders()
 {
 	return mRenders;
 }

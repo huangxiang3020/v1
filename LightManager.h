@@ -8,11 +8,11 @@ public:
 	LightManager(const LightManager&) = delete;
 	LightManager& operator=(const LightManager&) = delete;
 
-	void add(Light* light);
-	void remove(Light* light);
-	std::vector<Light*>& getLights();
+	void add(const std::shared_ptr<Light>& light);
+	void remove(const std::shared_ptr<Light>& light);
+	std::vector<std::shared_ptr<Light>>& getLights();
 
 private:
 	LightManager() = default;
-	std::vector<Light*> mLights;
+	std::vector<std::shared_ptr<Light>> mLights;
 };

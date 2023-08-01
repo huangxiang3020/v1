@@ -51,9 +51,8 @@ private:
 template <typename T>
 std::shared_ptr<T> Node::addComponent()
 {
-	auto component = std::make_shared<T>(this);
+	auto component = std::make_shared<T>(shared_from_this());
 	mComponents.push_back(component);
-
 	component->awake();
 	return component;
 }
