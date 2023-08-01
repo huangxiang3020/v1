@@ -57,6 +57,9 @@ graph TB
       RenderManager
       ResourceManager
       LightManager
+      InputManager
+      TimeManager
+      ObjectManager
     end
 
     Scene-->Node
@@ -78,4 +81,16 @@ graph TB
     Device-->Mesh
     Device-->Shader
     Device-->Texture
+
+    ManagerContext
+    CopyObject
+    ReadWrite
+    Network
+    Animator
+    Tween
+    UI
+    Font
+    Event
+    Script
 ```
+
