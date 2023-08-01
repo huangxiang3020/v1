@@ -39,6 +39,7 @@
     <ClCompile Include="TimeManger.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="ManagerContext.cpp" />
+    <ClCompile Include="EditorCameraController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GfxDevice.h">
@@ -72,5 +73,6 @@
     <ClInclude Include="TimeManger.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="ManagerContext.h" />
+    <ClInclude Include="EditorCameraController.h" />
   </ItemGroup>
 </Project>

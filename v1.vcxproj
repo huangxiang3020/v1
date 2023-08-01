@@ -135,6 +135,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="EditorCameraController.cpp" />
     <ClCompile Include="external\src\gl.c" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ClassIDs.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="EditorCameraController.h" />
     <ClInclude Include="GfxDevice.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Light.h" />
