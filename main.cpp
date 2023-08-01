@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 	light->setDirection(glm::vec3(0, -1, -1));
 
 	// pet
-	const auto petPrefab = ResourceManager::instance().load<Prefab>("res/model/fbx/pet004/pet004.fbx");
+	const auto petPrefab = ResourceManager::instance().load<Prefab>("res/model/fbx/pet001/pet001.fbx");
 	const auto petPrefabNode = petPrefab->getNode();
 	petPrefabNode->setLocalEulerAngles(glm::vec3(-90, 0, 0));
 	petPrefabNode->setLocalPosition(glm::vec3(0, -1, 0));
@@ -61,9 +61,9 @@ int main(int argc, char* argv[])
 
 		// startDraw
 		device->clearColor(glm::vec4(1, 1, 1, 1));
-		for (const auto renderCamera : CameraManager::instance().getCameras())
+		for (const auto& renderCamera : CameraManager::instance().getCameras())
 		{
-			for (const auto render : RenderManager::instance().getRenders())
+			for (const auto& render : RenderManager::instance().getRenders())
 			{
 				render->draw(renderCamera);
 			}
