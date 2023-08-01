@@ -9,7 +9,6 @@ class GfxDevice
 public:
 	int32_t initalize();
 	void clearColor(const glm::vec4& color) const;
-	void processInput() const;
 	void swap() const;
 	bool shouldQuit() const;
 	void quit() const;

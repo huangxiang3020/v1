@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Scene.h"
 #include "CameraManager.h"
+#include "InputManager.h"
 #include "Light.h"
 #include "ObjectManager.h"
 #include "Prefab.h"
@@ -11,6 +12,8 @@
 #include "ResourceManager.h"
 #include "TimeManger.h"
 #include "Spin.h"
+#include "EditorCameraController.h"
+
 
 int main(int argc, char* argv[])
 {
@@ -29,6 +32,7 @@ int main(int argc, char* argv[])
 	camera->setFar(1000);
 	camera->setNear(1);
 	camera->setFov(45);
+	cameraNode->addComponent<EditorCameraController>();
 
 	// light
 	const auto lightNode = std::make_shared<Node>();
@@ -51,15 +55,15 @@ int main(int argc, char* argv[])
 
 	while (!device->shouldQuit())
 	{
-		device->processInput();
+		InputManager::instance().processInput();
 		TimeManger::instance().update();
 		scene->updatePhase();
 
 		// startDraw
 		device->clearColor(glm::vec4(1, 1, 1, 1));
-		for (const std::shared_ptr<Camera>& renderCamera : CameraManager::instance().getCameras())
+		for (const auto renderCamera : CameraManager::instance().getCameras())
 		{
-			for (const std::shared_ptr<Render>& render : RenderManager::instance().getRenders())
+			for (const auto render : RenderManager::instance().getRenders())
 			{
 				render->draw(renderCamera);
 			}

@@ -42,16 +42,9 @@ void GfxDevice::clearColor(const glm::vec4& color) const
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
-void GfxDevice::processInput() const
-{
-	if (glfwGetKey(mWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		glfwSetWindowShouldClose(mWindow, true);
-}
-
 void GfxDevice::swap() const
 {
 	glfwSwapBuffers(mWindow);
-	glfwPollEvents();
 }
 
 bool GfxDevice::shouldQuit() const
