@@ -4,12 +4,12 @@
 #include "Object.h"
 class Node;
 
-class Component : public Object, public std::enable_shared_from_this<Component>
+class Component : public Object
 {
 	REGISTER_CLASS(Component)
 	friend class Node;
-	Component(const std::shared_ptr<Node>& node);
-	std::shared_ptr<Node> getNode() const;
+	Component(Node* node);
+	Node* getNode() const;
 	void destroy();
 
 protected:
@@ -19,5 +19,5 @@ protected:
 
 private:
 	void innerDestroy();
-	std::weak_ptr<Node> mNode;
+	Node* mNode;
 };

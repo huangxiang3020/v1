@@ -6,12 +6,12 @@ LightManager& LightManager::instance()
 	return instance;
 }
 
-void LightManager::add(const std::shared_ptr<Light>& light)
+void LightManager::add(Light* light)
 {
 	mLights.push_back(light);
 }
 
-void LightManager::remove(const std::shared_ptr<Light>& light)
+void LightManager::remove(Light* light)
 {
 	for (auto it = mLights.begin(); it != mLights.end(); ++it)
 	{
@@ -23,7 +23,7 @@ void LightManager::remove(const std::shared_ptr<Light>& light)
 	}
 }
 
-std::vector<std::shared_ptr<Light>>& LightManager::getLights()
+std::vector<Light*>& LightManager::getLights()
 {
 	return mLights;
 }

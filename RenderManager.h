@@ -10,11 +10,11 @@ public:
 	RenderManager(const RenderManager&) = delete;
 	RenderManager& operator=(const RenderManager&) = delete;
 
-	void add(const std::shared_ptr<Render>& render);
-	void remove(const std::shared_ptr<Render>& render);
-	std::vector<std::shared_ptr<Render>>& getRenders();
+	void add(Render* render);
+	void remove(Render* render);
+	std::vector<Render*>& getRenders();
 
 private:
 	RenderManager() = default;
-	std::vector<std::shared_ptr<Render>> mRenders;
+	std::vector<Render*> mRenders;
 };

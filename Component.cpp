@@ -1,7 +1,7 @@
 #include "Component.h"
 
 
-Component::Component(const std::shared_ptr<Node>& node)
+Component::Component(Node* node)
 {
 	mNode = node;
 }
@@ -18,9 +18,9 @@ void Component::onDestroy()
 {
 }
 
-std::shared_ptr<Node> Component::getNode() const
+Node* Component::getNode() const
 {
-	return mNode.lock();
+	return mNode;
 }
 
 void Component::destroy()

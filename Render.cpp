@@ -4,7 +4,7 @@
 #include "LightManager.h"
 #include "RenderManager.h"
 
-void Render::draw(const std::shared_ptr<Camera>& camera) const
+void Render::draw(const Camera *camera) const
 {
 	const auto modelLocalToWorld = getNode()->getLocalToWorldMatrix();
 	const auto cameraNode = camera->getNode();
@@ -38,14 +38,12 @@ void Render::draw(const std::shared_ptr<Camera>& camera) const
 
 void Render::awake()
 {
-	const auto render = std::dynamic_pointer_cast<Render>(shared_from_this());
-	RenderManager::instance().add(render);
+	RenderManager::instance().add(this);
 }
 
 void Render::onDestroy()
 {
-	const auto render = std::dynamic_pointer_cast<Render>(shared_from_this());
-	RenderManager::instance().remove(render);
+	RenderManager::instance().remove(this);
 }
 
 void Render::setMesh(const std::shared_ptr<Mesh>& mesh)

@@ -3,14 +3,12 @@
 
 void Light::awake()
 {
-	const auto light = std::dynamic_pointer_cast<Light>(shared_from_this());
-	LightManager::instance().add(light);
+	LightManager::instance().add(this);
 }
 
 void Light::onDestroy()
 {
-	const auto light = std::dynamic_pointer_cast<Light>(shared_from_this());
-	LightManager::instance().remove(light);
+	LightManager::instance().remove(this);
 }
 
 void Light::setDirection(const glm::vec3& direction)

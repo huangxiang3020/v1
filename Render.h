@@ -9,7 +9,7 @@ class Render : public Component
 {
 	REGISTER_CLASS(Render)
 	using Component::Component;
-	void draw(const std::shared_ptr<Camera>& camera) const;
+	void draw(const Camera* camera) const;
 	void awake() override;
 	void onDestroy() override;
 	void setMesh(const std::shared_ptr<Mesh>& mesh);

@@ -9,11 +9,11 @@ public:
 	CameraManager(const CameraManager&) = delete;
 	CameraManager& operator=(const CameraManager&) = delete;
 
-	void add(const std::shared_ptr<Camera>& camera);
-	void remove(const std::shared_ptr<Camera>& camera);
-	std::vector<std::shared_ptr<Camera>>& getCameras();
+	void add(Camera* camera);
+	void remove(Camera* camera);
+	std::vector<Camera*>& getCameras();
 
 private:
 	CameraManager() = default;
-	std::vector<std::shared_ptr<Camera>> mCameras;
+	std::vector<Camera*> mCameras;
 };
