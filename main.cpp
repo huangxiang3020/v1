@@ -13,7 +13,7 @@
 #include "TimeManger.h"
 #include "Spin.h"
 #include "EditorCameraController.h"
-
+#include "Font.h"
 
 int main(int argc, char* argv[])
 {
@@ -47,11 +47,62 @@ int main(int argc, char* argv[])
 	petPrefabNode->setLocalPosition(glm::vec3(0, -1, 0));
 	petPrefabNode->addComponent<Spin>();
 
+	// image
+	const std::vector<glm::vec3> vertices =
+	{
+		{0, 0, 0},
+		{1, 0, 0},
+		{1, 1, 0},
+		{0, 1, 0},
+	};
+	const std::vector<glm::vec2> uvs = {
+		{0, 0},
+		{1, 0},
+		{1, 1},
+		{0, 1},
+	};
+	const std::vector<glm::vec3> normals =
+	{
+		{0, 0, 1},
+		{0, 0, 1},
+		{0, 0, 1},
+		{0, 0, 1},
+	};
+	const std::vector<uint32_t> indices = {
+		0, 1, 3,
+		1, 2, 3,
+	};
+	const auto imageMesh = std::make_shared<Mesh>();
+	imageMesh->setVertices(vertices);
+	imageMesh->setUVs(uvs);
+	imageMesh->setNormals(normals);
+	imageMesh->setIndices(indices);
+	const auto font = ResourceManager::instance().load<Font>("res/fonts/segoe_slboot.ttf");
+	font->setSize(150);
+	font->addCharToTexture('A');
+	font->addCharToTexture('B');
+	font->addCharToTexture('C');
+	for (int i = 0; i < 20; i++)
+	{
+		font->addCharToTexture(i + 0x48);
+	}
+	const auto fontTexture = font->getTexture();
+	// Shader
+	const auto shader = ResourceManager::instance().load<Shader>(
+		"res/shader/vertex.vs", "res/shader/frag.fs");
+	const auto imagePrefab = std::make_shared<Node>();
+	imagePrefab->setLocalPosition(glm::vec3(1, 0, 0));
+	const auto render = imagePrefab->addComponent<Render>();
+	render->setMesh(imageMesh);
+	render->setShader(shader);
+	render->setTexture(fontTexture);
+
 	// scene
 	const auto scene = std::make_shared<Scene>();
 	scene->getNode()->addChild(cameraNode);
 	scene->getNode()->addChild(lightNode);
 	scene->getNode()->addChild(petPrefabNode);
+	scene->getNode()->addChild(imagePrefab);
 
 	while (!device->shouldQuit())
 	{

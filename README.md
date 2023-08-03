@@ -81,16 +81,15 @@ graph TB
     Device-->Mesh
     Device-->Shader
     Device-->Texture
-
-    ManagerContext
-    CopyObject
-    ReadWrite
-    Network
-    Animator
-    Tween
-    UI
-    Font
-    Event
-    Script
 ```
-
+- [ ] ManagerContext
+- [ ] CopyObject
+- [ ] ReadWrite
+- [ ] Network
+- [ ] Animator Animation
+- [ ] Tween
+- [ ] UI
+- [ ] Font
+- [ ] Event
+- [ ] Script
+- [ ] Logger

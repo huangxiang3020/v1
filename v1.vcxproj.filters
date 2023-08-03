@@ -40,6 +40,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="ManagerContext.cpp" />
     <ClCompile Include="EditorCameraController.cpp" />
+    <ClCompile Include="Font.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GfxDevice.h">
@@ -74,5 +75,6 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="ManagerContext.h" />
     <ClInclude Include="EditorCameraController.h" />
+    <ClInclude Include="Font.h" />
   </ItemGroup>
 </Project>

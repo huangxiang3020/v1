@@ -17,4 +17,5 @@ enum ClassIDType
 	DefineClassID(Shader, 9)
 	DefineClassID(Texture, 10)
 	DefineClassID(EditorCameraController, 11)
+	DefineClassID(Font, 12)
 };
