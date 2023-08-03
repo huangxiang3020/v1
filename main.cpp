@@ -77,15 +77,16 @@ int main(int argc, char* argv[])
 	imageMesh->setUVs(uvs);
 	imageMesh->setNormals(normals);
 	imageMesh->setIndices(indices);
-	const auto font = ResourceManager::instance().load<Font>("res/fonts/segoe_slboot.ttf");
-	font->setSize(150);
+	const auto font = ResourceManager::instance().load<Font>("res/fonts/font_ssb_kt.ttf");
+	font->setSize(100);
 	font->addCharToTexture('A');
 	font->addCharToTexture('B');
 	font->addCharToTexture('C');
-	for (int i = 0; i < 20; i++)
-	{
-		font->addCharToTexture(i + 0x48);
-	}
+	font->addCharToTexture(0x4E2D);
+	font->addCharToTexture(L'¹ú');
+	font->addCharToTexture(L'ÖÆ');
+	font->addCharToTexture(L'Ôì');
+
 	const auto fontTexture = font->getTexture();
 	// Shader
 	const auto shader = ResourceManager::instance().load<Shader>(
