@@ -1,5 +1,6 @@
 #include "Font.h"
 #include <iostream>
+#include <unordered_map>
 #include <glm/glm.hpp>
 
 constexpr uint32_t letterTexWidth = 512;
@@ -9,8 +10,9 @@ static uint32_t letterTexY = 0;
 static uint32_t letterTexNextY = 0;
 static uint32_t letterTexSpace = 1;
 static uint8_t letterTex[letterTexWidth * letterTexHeight];
+static std::unordered_map<uint32_t, Letter> letterDictionary;
 
-static void addChar(const FT_GlyphSlot glyph)
+static void addChar(const FT_GlyphSlot glyph, Letter& letter)
 {
 	const auto bitmap = glyph->bitmap;
 	const auto width = glyph->bitmap.width;
@@ -49,6 +51,17 @@ static void addChar(const FT_GlyphSlot glyph)
 			letterTex[letterTexIndex] = bitmap.buffer[bitMapIndex];
 		}
 	}
+
+	const auto baseLineOffset = static_cast<uint32_t>(0.26 * letter.h);
+	letter.u = static_cast<int32_t>(letterTexX);
+	letter.v = static_cast<int32_t>(letterTexY);
+	letter.w = static_cast<int32_t>(width);
+	letter.h = static_cast<int32_t>(height);
+	letter.advance = glyph->advance.x >> 6;
+	letter.offsetX = glyph->bitmap_left;
+	letter.offsetY = static_cast<int32_t>(baseLineOffset + (glyph->bitmap_top - height));
+	letter.texWidth = letterTexWidth;
+	letter.texHeight = letterTexHeight;
 
 	letterTexX += width + letterTexSpace;
 }
@@ -95,15 +108,28 @@ void Font::setSize(uint32_t size)
 	}
 }
 
+uint32_t Font::getSize() const
+{
+	return mSize;
+}
+
 void Font::addCharToTexture(uint32_t charCode) const
 {
+	if (letterDictionary.find(charCode) != letterDictionary.end())
+	{
+		return;
+	}
+
 	const auto error = FT_Load_Char(mFace, charCode, FT_LOAD_RENDER);
 	if (error)
 	{
 		std::cout << "freetype error: " << error << std::endl;
 		return;
 	}
-	addChar(mFace->glyph);
+	auto letter = Letter();
+	letter.h = static_cast<int32_t>(mSize);
+	addChar(mFace->glyph, letter);
+	letterDictionary[charCode] = letter;
 }
 
 std::shared_ptr<Texture> Font::getTexture() const
@@ -111,6 +137,16 @@ std::shared_ptr<Texture> Font::getTexture() const
 	auto texture = std::make_shared<Texture>();
 	texture->load(letterTexWidth, letterTexHeight, 1, letterTex);
 	return texture;
+}
+
+bool Font::getLetter(uint32_t charCode, Letter& letter) const
+{
+	if (letterDictionary.find(charCode) == letterDictionary.end())
+	{
+		addCharToTexture(charCode);
+	}
+	letter = letterDictionary[charCode];
+	return true;
 }
 
 Font::~Font()

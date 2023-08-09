@@ -82,6 +82,25 @@ graph TB
     Device-->Shader
     Device-->Texture
 ```
+- [ ] Font
+```mermaid
+graph TB
+    subgraph Font
+    size
+    end
+    letterTex
+    subgraph letterDictionary
+      subgraph letter
+      u
+      v
+      w
+      h
+      advance
+      offsetX
+      offsetY
+      end
+    end
+```
 - [ ] ManagerContext
 - [ ] CopyObject
 - [ ] ReadWrite
@@ -89,7 +108,7 @@ graph TB
 - [ ] Animator Animation
 - [ ] Tween
 - [ ] UI
-- [ ] Font
+
 - [ ] Event
 - [ ] Script
 - [ ] Logger

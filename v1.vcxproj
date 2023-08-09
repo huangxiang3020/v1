@@ -154,6 +154,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Spin.cpp" />
+    <ClCompile Include="TextRender.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="TimeManger.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Spin.h" />
+    <ClInclude Include="TextRender.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="TimeManger.h" />

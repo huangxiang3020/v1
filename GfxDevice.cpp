@@ -39,6 +39,9 @@ void GfxDevice::clearColor(const glm::vec4& color) const
 	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 

@@ -41,6 +41,7 @@
     <ClCompile Include="ManagerContext.cpp" />
     <ClCompile Include="EditorCameraController.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="TextRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GfxDevice.h">
@@ -76,5 +77,6 @@
     <ClInclude Include="ManagerContext.h" />
     <ClInclude Include="EditorCameraController.h" />
     <ClInclude Include="Font.h" />
+    <ClInclude Include="TextRender.h" />
   </ItemGroup>
 </Project>

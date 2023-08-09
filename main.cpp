@@ -13,7 +13,7 @@
 #include "TimeManger.h"
 #include "Spin.h"
 #include "EditorCameraController.h"
-#include "Font.h"
+#include "TextRender.h"
 
 int main(int argc, char* argv[])
 {
@@ -47,63 +47,24 @@ int main(int argc, char* argv[])
 	petPrefabNode->setLocalPosition(glm::vec3(0, -1, 0));
 	petPrefabNode->addComponent<Spin>();
 
-	// image
-	const std::vector<glm::vec3> vertices =
-	{
-		{0, 0, 0},
-		{1, 0, 0},
-		{1, 1, 0},
-		{0, 1, 0},
-	};
-	const std::vector<glm::vec2> uvs = {
-		{0, 0},
-		{1, 0},
-		{1, 1},
-		{0, 1},
-	};
-	const std::vector<glm::vec3> normals =
-	{
-		{0, 0, 1},
-		{0, 0, 1},
-		{0, 0, 1},
-		{0, 0, 1},
-	};
-	const std::vector<uint32_t> indices = {
-		0, 1, 3,
-		1, 2, 3,
-	};
-	const auto imageMesh = std::make_shared<Mesh>();
-	imageMesh->setVertices(vertices);
-	imageMesh->setUVs(uvs);
-	imageMesh->setNormals(normals);
-	imageMesh->setIndices(indices);
+	// text
 	const auto font = ResourceManager::instance().load<Font>("res/fonts/font_ssb_kt.ttf");
-	font->setSize(100);
-	font->addCharToTexture('A');
-	font->addCharToTexture('B');
-	font->addCharToTexture('C');
-	font->addCharToTexture(0x4E2D);
-	font->addCharToTexture(L'¹ú');
-	font->addCharToTexture(L'ÖÆ');
-	font->addCharToTexture(L'Ôì');
+	font->setSize(50);
 
-	const auto fontTexture = font->getTexture();
-	// Shader
-	const auto shader = ResourceManager::instance().load<Shader>(
-		"res/shader/vertex.vs", "res/shader/frag.fs");
-	const auto imagePrefab = std::make_shared<Node>();
-	imagePrefab->setLocalPosition(glm::vec3(1, 0, 0));
-	const auto render = imagePrefab->addComponent<Render>();
-	render->setMesh(imageMesh);
-	render->setShader(shader);
-	render->setTexture(fontTexture);
+	const auto textPrefab = std::make_shared<Node>();
+	const auto textRender = textPrefab->addComponent<TextRender>();
+	textRender->setFont(font);
+	textRender->setColor(glm::vec4(1, 1, 0, 1));
+	textRender->setText("What\na\nWonderful\nPlace!");
+	textPrefab->setLocalPosition(glm::vec3(1, 1, 0));
+	textPrefab->setLocalScale(glm::vec3(0.01f, 0.01f, 0.01f));
 
 	// scene
 	const auto scene = std::make_shared<Scene>();
 	scene->getNode()->addChild(cameraNode);
 	scene->getNode()->addChild(lightNode);
 	scene->getNode()->addChild(petPrefabNode);
-	scene->getNode()->addChild(imagePrefab);
+	scene->getNode()->addChild(textPrefab);
 
 	while (!device->shouldQuit())
 	{
