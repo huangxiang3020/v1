@@ -49,17 +49,55 @@ void TextRender::setText(const std::string& text)
 	std::vector<uint32_t> indices;
 	int32_t alignY = 0;
 	int32_t alignX = 0;
-	for (const char charCode : text)
+	for (uint32_t i = 0; i < text.size(); ++i)
 	{
-		if (charCode == '\n')
+		const uint8_t charCode = text[i];
+		if (charCode <= 0x7f)
 		{
-			alignY -= static_cast<int32_t>(mFont->getSize());
-			alignX = 0;
-			continue;
+			if (charCode == '\n')
+			{
+				alignY -= static_cast<int32_t>(mFont->getSize());
+				alignX = 0;
+				continue;
+			}
+
+			if (!addCharToMesh(charCode, alignX, alignY, vertices, uvs, indices))
+			{
+				break;
+			}
 		}
-		if (!addCharToMesh(charCode, alignX, alignY, vertices, uvs, indices))
+		else if (charCode >= 0xc0 && charCode <= 0xdf)
 		{
-			break;
+			const uint32_t a = text[i] & 0x1f;
+			const uint32_t b = text[i + 1] & 0x3f;
+			if (!addCharToMesh((a << 6) + b, alignX, alignY, vertices, uvs, indices))
+			{
+				break;
+			}
+			i++;
+		}
+		else if (charCode >= 0xe0 && charCode <= 0xef)
+		{
+			const uint32_t a = text[i] & 0xf;
+			const uint32_t b = text[i + 1] & 0x3f;
+			const uint32_t c = text[i + 2] & 0x3f;
+			if (!addCharToMesh((a << 12) + (b << 6) + c, alignX, alignY, vertices, uvs, indices))
+			{
+				break;
+			}
+			i += 2;
+		}
+		else if (charCode >= 0xf0 && charCode <= 0xf7)
+		{
+			const uint32_t a = text[i] & 0x7;
+			const uint32_t b = text[i + 1] & 0x3f;
+			const uint32_t c = text[i + 2] & 0x3f;
+			const uint32_t d = text[i + 3] & 0x3f;
+			if (!addCharToMesh((a << 18) + (b << 6) + (c << 6) + d, alignX, alignY, vertices, uvs, indices))
+			{
+				break;
+			}
+			i += 3;
 		}
 	}
 
