@@ -115,11 +115,22 @@ void TextRender::setColor(const glm::vec4& color)
 	mColor = color;
 }
 
+void TextRender::setMaxTextWidth(int32_t maxTextWidth)
+{
+	mMaxTextWidth = maxTextWidth;
+}
+
 bool TextRender::addCharToMesh(uint32_t charCode, int32_t& alignX, int32_t& alignY, std::vector<glm::vec3>& vertices,
                                std::vector<glm::vec2>& uvs, std::vector<uint32_t>& indices) const
 {
 	auto letter = Letter();
 	mFont->getLetter(charCode, letter);
+
+	if (mMaxTextWidth > 0 && alignX + letter.offsetX + letter.w >= mMaxTextWidth)
+	{
+		alignY -= static_cast<int32_t>(mFont->getSize());
+		alignX = 0;
+	}
 
 	vertices.emplace_back(alignX + letter.offsetX, alignY + letter.offsetY, 0);
 	vertices.emplace_back(alignX + letter.offsetX + letter.w, alignY + letter.offsetY, 0);
