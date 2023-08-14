@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir)\external\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\external\include;$(ProjectDir)\external\lua;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)\external\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -133,6 +133,40 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\lua-5.4.6\src\lapi.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lauxlib.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lbaselib.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lcode.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lcorolib.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lctype.c" />
+    <ClCompile Include="..\lua-5.4.6\src\ldblib.c" />
+    <ClCompile Include="..\lua-5.4.6\src\ldebug.c" />
+    <ClCompile Include="..\lua-5.4.6\src\ldo.c" />
+    <ClCompile Include="..\lua-5.4.6\src\ldump.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lfunc.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lgc.c" />
+    <ClCompile Include="..\lua-5.4.6\src\linit.c" />
+    <ClCompile Include="..\lua-5.4.6\src\liolib.c" />
+    <ClCompile Include="..\lua-5.4.6\src\llex.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lmathlib.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lmem.c" />
+    <ClCompile Include="..\lua-5.4.6\src\loadlib.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lobject.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lopcodes.c" />
+    <ClCompile Include="..\lua-5.4.6\src\loslib.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lparser.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lstate.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lstring.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lstrlib.c" />
+    <ClCompile Include="..\lua-5.4.6\src\ltable.c" />
+    <ClCompile Include="..\lua-5.4.6\src\ltablib.c" />
+    <ClCompile Include="..\lua-5.4.6\src\ltm.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lua.c" />
+    <ClCompile Include="..\lua-5.4.6\src\luac.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lundump.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lutf8lib.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lvm.c" />
+    <ClCompile Include="..\lua-5.4.6\src\lzio.c" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -142,6 +176,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LightManager.cpp" />
+    <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GfxDevice.cpp" />
     <ClCompile Include="ManagerContext.cpp" />
@@ -161,16 +196,46 @@
     <ClCompile Include="TimeManger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\lua-5.4.6\src\lapi.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lauxlib.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lcode.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lctype.h" />
+    <ClInclude Include="..\lua-5.4.6\src\ldebug.h" />
+    <ClInclude Include="..\lua-5.4.6\src\ldo.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lfunc.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lgc.h" />
+    <ClInclude Include="..\lua-5.4.6\src\ljumptab.h" />
+    <ClInclude Include="..\lua-5.4.6\src\llex.h" />
+    <ClInclude Include="..\lua-5.4.6\src\llimits.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lmem.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lobject.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lopcodes.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lopnames.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lparser.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lprefix.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lstate.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lstring.h" />
+    <ClInclude Include="..\lua-5.4.6\src\ltable.h" />
+    <ClInclude Include="..\lua-5.4.6\src\ltm.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lua.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lua.hpp" />
+    <ClInclude Include="..\lua-5.4.6\src\luaconf.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lualib.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lundump.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lvm.h" />
+    <ClInclude Include="..\lua-5.4.6\src\lzio.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="ClassIDs.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Constant.h" />
     <ClInclude Include="EditorCameraController.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GfxDevice.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LightManager.h" />
+    <ClInclude Include="LuaManager.h" />
     <ClInclude Include="ManagerContext.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Object.h" />

@@ -1,5 +1,6 @@
 #include "GfxDevice.h"
 #include "InputManager.h"
+#include "Constant.h"
 
 int32_t GfxDevice::initalize()
 {
@@ -11,7 +12,7 @@ int32_t GfxDevice::initalize()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_SAMPLES, 4);
 
-	mWindow = glfwCreateWindow(1280, 720, "v1", nullptr, nullptr);
+	mWindow = glfwCreateWindow(Screen_Width, Screen_Height, "v1", nullptr, nullptr);
 	if (!mWindow)
 	{
 		glfwTerminate();
